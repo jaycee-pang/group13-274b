@@ -10,7 +10,7 @@ Directory contains Jupyter notebooks used to visualize model automata outputs sa
 ## UPDATES
 
 11.27.2023
-- Shirley: created directory, added README
+- Shirley: created directory, added README, `visualize_disease_automata.pynb`, and `visualize_environment_automata.pynb`
 
 
 ## QUESTIONS
