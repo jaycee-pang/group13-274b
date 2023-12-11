@@ -11,6 +11,8 @@ CPP         = g++
 # compiler flags -O3 optimized version
 CPPFLAGS    = -O0 -o
 
+CPP_LIBFLAGS=	-O3 -c
+
 # allows for compiler warning messages
 ERRORFLAG 	= -Wall
 
@@ -26,15 +28,37 @@ BIN_DIR     = ../Bin
 # The next line contains a list of executable object files 
 # created by this Makefile.
 AUTOMATA_EXECUTABLES = automata
+AUTOMATA_OBJS = automata_class_functions.o Source.o moore.o
+AUTOMATA_LIB = libautomata.a
 
 #temporary testing makefile for disease application of cellular automata
-test_disease_auto:	$(INC_DIR)/myclass.h
+test_disease_auto:	$(INC_DIR)/myclass.h $(INC_DIR)/Source.h
 	$(CPP) $(ERRORFLAG) $(CPPFLAGS) automata automata_class.cpp \
-	-I$(INC_DIR)
+	-I$(INC_DIR) $(LIB_DIR)/libautomata.a
 	mv automata $(BIN_DIR)
 	cd $(BIN_DIR); ./automata
 
-all: $(AUTOMATA_EXECUTABLES)
+#create class functions object file
+automata_class_functions.o:
+	$(CPP) $(CPP_LIBFLAGS) automata_class_functions.cpp -I$(INC_DIR)
+
+#grid initialization functions
+Source.o:
+	$(CPP) $(CPP_LIBFLAGS) Source.cpp -I$(INC_DIR)
+
+moore.o:
+	$(CPP) $(CPP_LIBFLAGS) moore.cpp -I$(INC_DIR)
+
+#create+update automata class library. Move to /Lib
+libautomata.a: $(AUTOMATA_OBJS)
+	ar -ru $(AUTOMATA_LIB) $(AUTOMATA_OBJS)
+	mv $(AUTOMATA_LIB) $(LIB_DIR)
+	rm $(AUTOMATA_OBJS)
+
+all:
+	make automata_class_functions.o
+	make libautomata.a
+	make test_disease_auto
 
 cleanall:
 	cd $(BIN_DIR); rm $(AUTOMATA_EXECUTABLES) 
