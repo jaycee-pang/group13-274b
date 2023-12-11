@@ -1,24 +1,24 @@
 # MSSE Berkeley
 # CHEM 274B: Software Engineering Foundations for Molecular Sciences
-## November 2023
+## December 2023
 
 ## USAGE
 Create and run disease_automata_executable
-<pre> make test_disease_automata</pre>
+<pre> make test_disease_auto</pre>
 
 ## UPDATES
 
-11.26.2023
-- Laura added Makefile, README to /Source
+11.26.2023 - Laura
+- added Makefile, README to /Source
     - Note: Makefile doesn't really do anything yet lol
 - Added `disease_automata.cpp` to /Source
     -  Began adding cpp implementation of disease automata using `Source.cpp`
 
-12.2.2023
+12.2.2023 - Laura
 - Moved `disease_automata.cpp` somewhere else to create a general purpose library in /Source 
 - Added `automata_class.cpp` to /Source 
 
-12.4.2023
+12.4.2023 - Laura
 - Added `myclass.h` in /Include for prototypes to `automata_class_functions.cpp`
 - Added `automata_class_functions.cpp` in /Source to hold rule functions
 - Added `user_input.txt` to hold user input to be read from `automata_class.cpp`
@@ -26,3 +26,10 @@ Create and run disease_automata_executable
     - apply_rules() accepts rules from myclass.h
     - Constructor updated to initialize
     - created run_simulation() function to run steps the number of inputted time steps
+
+12.6.2023 - Laura
+- implemented source.cpp functions into automata class (`automata_class.cpp`)
+- began implementing von neumann function into automata class
+    - TODO: ran into problem on line 51 of automata class, generating a weird compiler error
+    - try running to see error with:
+<pre> make test_disease_auto </pre>
