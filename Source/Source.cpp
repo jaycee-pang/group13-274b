@@ -5,6 +5,7 @@
 // initialize grid from a init func
 std::vector<std::vector<int>> initialize_grid(int size, std::function<int(int, int)> init_func) {
     std::vector<std::vector<int>> grid(size, std::vector<int>(size));
+
     for (int i = 0; i < size; ++i) {
         for (int j = 0; j < size; ++j) {
             grid[i][j] = init_func(i, j);
@@ -12,8 +13,14 @@ std::vector<std::vector<int>> initialize_grid(int size, std::function<int(int, i
     }
     return grid;
 }
+<<<<<<< HEAD
 // apply a rule function
 std::vector<std::vector<int>> apply_rules(const std::vector<std::vector<int>>& grid, std::function<int(int, int, const std::vector<std::vector<int>>&)> rule_func) {
+=======
+
+std::vector<std::vector<int>> apply_rules(const std::vector<std::vector<int>>& grid,
+                                         std::function<int(int, int, const std::vector<std::vector<int>>&)> rule_func) {
+>>>>>>> 128092a26aef49983787d1156c99f03301b17c47
     int size = grid.size();
     std::vector<std::vector<int>> new_grid(size, std::vector<int>(size));
     for (int i = 0; i < size; ++i) {
@@ -28,8 +35,12 @@ void update_grid(std::vector<std::vector<int>>& grid, const std::vector<std::vec
     grid = new_grid;
 }
 
+<<<<<<< HEAD
 
 // example init func for forest fire, input to initialize_grid
+=======
+// example init func for forest fire
+>>>>>>> 128092a26aef49983787d1156c99f03301b17c47
 
 // Function to initialize the grid for forest fire simulation
 
@@ -48,3 +59,5 @@ int forest_fire_init(int i, int j) {
         return 0;  // Empty
     }
 }
+
+//add init function and rule function here
