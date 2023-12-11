@@ -2,7 +2,7 @@
 #include <vector>
 #include <functional>
 #include <random>
-
+// initialize grid from a init func
 std::vector<std::vector<int>> initialize_grid(int size, std::function<int(int, int)> init_func) {
     std::vector<std::vector<int>> grid(size, std::vector<int>(size));
     for (int i = 0; i < size; ++i) {
@@ -12,7 +12,7 @@ std::vector<std::vector<int>> initialize_grid(int size, std::function<int(int, i
     }
     return grid;
 }
-
+// apply a rule function
 std::vector<std::vector<int>> apply_rules(const std::vector<std::vector<int>>& grid, std::function<int(int, int, const std::vector<std::vector<int>>&)> rule_func) {
     int size = grid.size();
     std::vector<std::vector<int>> new_grid(size, std::vector<int>(size));
@@ -23,13 +23,13 @@ std::vector<std::vector<int>> apply_rules(const std::vector<std::vector<int>>& g
     }
     return new_grid;
 }
-
+// update the grid
 void update_grid(std::vector<std::vector<int>>& grid, const std::vector<std::vector<int>>& new_grid) {
     grid = new_grid;
 }
 
 
-// example init func for forest fire
+// example init func for forest fire, input to initialize_grid
 
 // Function to initialize the grid for forest fire simulation
 
