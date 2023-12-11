@@ -61,10 +61,10 @@ int main(void)
     std::vector<std::vector<int>> grid;
     
     //set graph and initial conditions
-    grid = initialize_grid(size, temp_init_function(i, j));
+    grid = initialize_grid(size, int(temp_init_function)(int, int)); //
     //create a graph, ask user for rules and apply rules
-    grid = apply_rules(grid, rule_function());
-
+    grid = apply_rules(grid, int(rule_function) (int, int));  //goes into square, check if anything 
+    //around it is diseased, then sets that thing as a 
     for(int i = 0; i < 100; i++)    //100 time steps
     {
         step(grid);    
@@ -97,3 +97,5 @@ int main(void)
 
     config, nextConfig = nextConfig, config
 */
+
+//setup function will call jupyternotebook thing to accept text-file settings

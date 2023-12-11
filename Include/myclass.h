@@ -10,4 +10,4 @@
                 // during compilation
 #include <vector>   //allow for grid 
 
-int von_neumann_rules(int , int , std::vector<std::vector<int>>);
+int von_neumann_rules(int, int, const std::vector<std::vector<int>>&);
