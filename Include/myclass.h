@@ -8,6 +8,7 @@
 //
 #pragma once    // Ensures that this file is only included once
                 // during compilation
-#include <vector>   //allow for grid 
+#include <vector>   //allow for grid
+#include <iostream> //debugging 
 
-int von_neumann_rules(int, int, const std::vector<std::vector<int>>&);
+int von_neumann_rules(int, int, const std::vector<std::vector<int>>&, int);

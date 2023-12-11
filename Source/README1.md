@@ -3,8 +3,11 @@
 ## December 2023
 
 ## USAGE
-Create and run disease_automata_executable
+Create and run automata_class executable
 <pre> make test_disease_auto</pre>
+
+Create automata static library
+<pre> make libautomata.a </pre>
 
 ## UPDATES
 
@@ -33,3 +36,19 @@ Create and run disease_automata_executable
     - TODO: ran into problem on line 51 of automata class, generating a weird compiler error
     - try running to see error with:
 <pre> make test_disease_auto </pre>
+
+12.10.2023 - Laura
+- Solved weird compiler error. I just hadn't included the `automata_class_functions.cpp` in a library and had it included yet
+- Updated Makefile to be able to generate static library for Source
+
+12.11.2023 - Laura
+- fixed von_neumann_rules to allow for boundary conditions
+- __Jaycee, jw what the 'return sum' lines are for in your moore function?__
+- __can I add moore.cpp to the automata_class_functions.cpp file?__
+- __??? Is it ok that I just placed all your initialization functions in automata_class???__
+### TODO
+- [``] fix von neumann function so it's actually... von neumann
+- [``] allow input for up to 5 states
+- [`w`] allow for function decision between moore or von_neumann
+- [`c`] allow for specification of x and y dimensions of graph
+- [``] implement reading from `user_input.txt`
