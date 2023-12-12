@@ -43,12 +43,21 @@ Create automata static library
 
 12.11.2023 - Laura
 - fixed von_neumann_rules to allow for boundary conditions
-- __Jaycee, jw what the 'return sum' lines are for in your moore function?__
-- __can I add moore.cpp to the automata_class_functions.cpp file?__
-- __??? Is it ok that I just placed all your initialization functions in automata_class???__
+
 ### TODO
 - [``] fix von neumann function so it's actually... von neumann
 - [``] allow input for up to 5 states
 - [`w`] allow for function decision between moore or von_neumann
 - [`c`] allow for specification of x and y dimensions of graph
 - [``] implement reading from `user_input.txt`
+- [``] rule functions (majority)
+    - if type of states around the cell are like this, do this
+    - majority, 1 nearest neighbor, ...
+    - in apply rules, needs to know what rule function to apply
+        - in rules, call get neighbors(boundary_types), 
+- [``] update constructor to pass in initialization function and rule function
+- [`w`] move run simulation function to main
+- [``] implement radius
+- [``] include von neumann, rule as class function (get_neighbor_state)
+    - include von nuemann or moore, then boundary. Identify how many neighbors are in a certain state
+        - integrate in : get neighborhood state, rule function

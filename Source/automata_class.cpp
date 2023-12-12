@@ -3,9 +3,15 @@
 
 // This class allows a user to generate a cellular automaton with the
 //          following parameters:
-//          Inputs : file, num steps, x dimension, y dimension,
-//                   number of states, states, 
-//                   neighbors(moore or von neumann), boundaries(1 = fixed, 0 = periodic)
+//          Inputs:
+//              file_ : string
+//              num_steps :  
+//              dim_0_ : 
+//              y dimension : 
+//              num_states_ :
+//              states_ :  
+//              neighbors_ :
+//              boundaries_ : 
 //
 //          Outputs : step-wise changes in automaton simulation          
 
@@ -14,9 +20,23 @@
 #include <random>   //allows for random number generator in init function
 #include <string>   
 #include <fstream>  //allow for input from .txt file]
+#include <functional> //allow for std::function
 
 #include "myclass.h"    //allow for von neumann rule functions
 #include "neighborhoods.h"    //allow for moore rule function
+
+enum class BoundaryType
+{
+    Periodic,
+    Fixed,
+    Cutoff
+};
+
+enum class NeighborhoodType
+{
+    Moore,
+    VonNeumann
+};
 
 class Automata
 {
@@ -29,15 +49,31 @@ class Automata
         double rate_ = .2;   //rate of spread TODO: must be passed into user_input.txt
         double density_ = .5;    //chance that a cell will be active TODO: must be passed into user_input.txt
         int num_states_;    //number of states a cell can be (not including "empty")
-        std::vector<std::string> states_;   //states in the following order: unaffected, affected, destroyed 
-        std::string neighbors_; //Von Neumann or Moore
-        int boundary_;  //periodic(2) or fixed(1)
+        std::vector<std::string> states_;   //states in the following order: unaffected, affected, destroyed
+        NeighborhoodType neighborhood_type_; //Von Neumann or Moore
+        BoundaryType boundary_type_;  //periodic, fixed, or cutoff
+        std::function<int(int, int)> init_func; //user passed. otherwise, set to default
+        std::function<int(int, int, const std::vector<std::vector<int>>&)> rule_func; //user passed. otherwise, set to default
+        int time_step_;
+        // Utility function to get the state of a neighbor cell considering boundary conditions
+        int getNeighborState(int x, int y)
+        {
+            // Implement logic based on boundaryType and neighborhoodType
+            if (neighborhood_type_ == NeighborhoodType::Moore) {
+                int neighborOffsets = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+            } else if (neighborhood_type_ == NeighborhoodType::VonNeumann) {
+                int neighborOffsets = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+            }
+            // ...
+        }
     public:
         Automata(std::string file, int num_steps, int dim_0, int dim_1,
                 int num_states, std::vector<std::string> states, 
-                std::string neighbors, int boundary_type)  //probably will delete this constructor
+                NeighborhoodType neighbors, BoundaryType boundary_type,
+                std::function<int()> init_func = &start_grid,
+                std::function<int(int, int, const std::vector<std::vector<int>>&)> rule_func)  //probably will delete this constructor
             : file_(file), num_steps_(num_steps), dim_0_(dim_0), dim_1_(dim_1), 
-              num_states_(num_states), states_(states), neighbors_(neighbors), boundary_(boundary_type)
+              num_states_(num_states), states_(states), neighborhood_type_(neighbors), boundary_type_(boundary_type)
         {
             //setup from .txt file
             grid_ = initialize_grid();
@@ -57,7 +93,7 @@ class Automata
             //new grid, has changes from time step
             std::vector<std::vector<int>> new_grid(dim_0_, std::vector<int>(dim_1_));
 
-            if(neighbors_ == "moore")
+            if(neighborhood_type_ == NeighborhoodType::Moore)
             {
                 //new_grid = apply_rules(grid_, &moore);
             }
@@ -66,7 +102,7 @@ class Automata
             }
             update_grid(grid_, new_grid);
         }
-        void run_simulation()
+        void run_simulation()   //TODO: remove and replace in main
         {
             for(int t = 1; t < num_steps_; t++) //t represents time
             {
@@ -89,7 +125,7 @@ class Automata
             std::vector<std::vector<int>> new_grid(dim_0_, std::vector<int>(dim_1_));
             for (int i = 0; i < dim_0_; ++i) {
                 for (int j = 0; j < dim_1_; ++j) {
-                    new_grid[i][j] = rule_func(i, j, grid, boundary_);
+                    new_grid[i][j] = rule_func(i, j, grid, 1);
                 }
             }
             return new_grid;
@@ -131,6 +167,25 @@ class Automata
                 std::cout << std::endl;
             }
         }
+        // Save the grid
+        void saveGrid(std::string file_path)
+        {
+            std::ofstream out(file_path, std::ios::app);
+            if (!out.is_open())
+            {
+                out << "time_step, x, y, value" << std::endl;
+            }
+            else
+            {
+                for (int i = 0; i < dim_1_; ++i)
+                {
+                    for (int j = 0; j < dim_0_; ++j)
+                    {
+                        out << time_step_ << ", " << j << ", " << i << ", " << grid_[i][j] << std::endl;
+                    }
+                }
+            }
+        }
 };
 
 int main(void)
@@ -142,6 +197,6 @@ int main(void)
     states.push_back("infected");
     states.push_back("dead");
 
-    Automata disease_simulation(file, 10, 10, 10, 3, states, "Von Neumann", 1);
+    Automata disease_simulation(file, 10, 10, 10, 3, states, "VonNeumann", "Fixed");
     return 0;
 }
