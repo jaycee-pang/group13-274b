@@ -1,6 +1,14 @@
 #include <iostream> 
 #include <vector> 
 #include <tuple> 
+#include <algorithm> 
+#include <map> 
+
+enum class RuleType {
+    Majority, 
+    Straight, 
+    NeighborConditional
+};
 std::vector<int> getNeighborState(int x, int y){
     // Implement logic based on boundaryType and neighborhoodType
     if (neighborhood_type_ == NeighborhoodType::Moore) {
@@ -8,7 +16,9 @@ std::vector<int> getNeighborState(int x, int y){
         std::vector<int> neighborhood_states;  
         // loop through offsets and get neighborhood states according to boundary condition
         for (const auto& offset: neighborOffsets) { 
-            int offset_x, offset_y; 
+            int offset_x = std::get<0>(offset); 
+            int offset_y = std::get<1>(offset);
+
             int neighbor_x = x+offset_x; 
             int neighbor_y = y+offset_y; 
             int state; 
@@ -34,8 +44,39 @@ std::vector<int> getNeighborState(int x, int y){
 
             
         }
-        return neighborhoodStates; 
+        return neighborhood_states; 
     } 
 
    
 }
+
+int MajorityRules(int i, int j) {
+    std::vector neighborhood_states = getNeighborState(i, j); 
+    std::map<int, int> state_counts; 
+    for (int state : states) {
+        int count = std::count(neighborhood_states.begin(), neighborhood_states.end(), state); 
+
+        state_counts[state] = count; 
+    }
+    int max_count = 0; 
+    int max_state = 0; 
+    for (const auto& it: state_counts) {
+        if (it.second > max_count) {
+            max_count = it.second;
+            max_state = it.first; 
+        }
+    }
+    return max_state; 
+    // actually max state/num neighbors ; 
+}
+
+int StraightRules(int i, int j) {
+    return states[next state];
+
+}
+int ConditionalRules(int i, int j) {
+    std::vector<int> neighborhood_states = getNeighborState(i, j); 
+    
+}
+
+
