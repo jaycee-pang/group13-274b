@@ -45,19 +45,35 @@ Create automata static library
 - fixed von_neumann_rules to allow for boundary conditions
 
 ### TODO
-- [``] fix von neumann function so it's actually... von neumann
-- [``] allow input for up to 5 states
-- [`w`] allow for function decision between moore or von_neumann
-- [`c`] allow for specification of x and y dimensions of graph
+###### Laura
+- [``] complete 'disease_simulation.cpp' script in /Applications
+- [``] update automata_class with neighbor functions
+- [``] allow input for up to .5 * n*m states
+- [``] set default rule and init function as private attributes
+- [``] assert functions to ensure no:
+    - negative values
+- [``] ADD: neighbor rule function, straight rule function
+    - straight rule function is a private member, will be default
+
+###### Jaycee
+- [``] complete 'forest_simulation' script in /Applications
+- [``] alternate constructor to pass in just the file path
+    - then call function to parse data to attributes
+
+###### Shirley
+Place in separate .cpp file in Source:
 - [``] implement reading from `user_input.txt`
-- [``] rule functions (majority)
-    - if type of states around the cell are like this, do this
-    - majority, 1 nearest neighbor, ...
-    - in apply rules, needs to know what rule function to apply
-        - in rules, call get neighbors(boundary_types), 
-- [``] update constructor to pass in initialization function and rule function
-- [`w`] move run simulation function to main
-- [``] implement radius
-- [``] include von neumann, rule as class function (get_neighbor_state)
-    - include von nuemann or moore, then boundary. Identify how many neighbors are in a certain state
-        - integrate in : get neighborhood state, rule function
+- [``] complete graphing utils
+- [``] read simulation vector and timesteps from .txt file, output to graph, create gif
+- [``] majority rule function
+    - apply rules(), set nearby states with getneighborstates(), then call rule function
+    - take in output of getneighborhoodstates
+
+###### Jeffrey
+- [``] add method to 'set_rule_function()'
+    - use this to input custom rule
+- [``] add method to 'set_init_function()'
+
+Completed:
+- [`c`] move run simulation function to main
+- [`c`] allow for specification of x and y dimensions of graph
