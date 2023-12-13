@@ -21,6 +21,7 @@
 #include <string>   
 #include <fstream>  //allow for input from .txt file]
 #include <functional> //allow for std::function
+#include <tuple> //allow for offsets
 
 #include "myclass.h"    //allow for von neumann rule functions
 #include "neighborhoods.h"    //allow for moore rule function
@@ -38,6 +39,12 @@ enum class NeighborhoodType
     VonNeumann
 };
 
+enum class RuleType {
+    Straight,
+    Majority,
+    Neighbor
+};
+
 class Automata
 {
     private:
@@ -52,31 +59,62 @@ class Automata
         std::vector<std::string> states_;   //states in the following order: unaffected, affected, destroyed
         NeighborhoodType neighborhood_type_; //Von Neumann or Moore
         BoundaryType boundary_type_;  //periodic, fixed, or cutoff
-        std::function<int(int, int)> init_func; //user passed. otherwise, set to default
+        std::function<int(int, int)> init_func_; //user passed. otherwise, set to default
         std::function<int(int, int, const std::vector<std::vector<int>>&)> rule_func; //user passed. otherwise, set to default
         int time_step_;
-        // Utility function to get the state of a neighbor cell considering boundary conditions
-        int getNeighborState(int x, int y)
-        {
-            // Implement logic based on boundaryType and neighborhoodType
-            if (neighborhood_type_ == NeighborhoodType::Moore) {
-                int neighborOffsets = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
-            } else if (neighborhood_type_ == NeighborhoodType::VonNeumann) {
-                int neighborOffsets = {{-1, 0}, {0, -1}, {0, 1}, {1, 0}};
+        std::string output_file= "automata_output.txt";
+        
+        std::vector<int> getNeighborState(int x, int y){
+        // Implement logic based on boundaryType and neighborhoodType
+        if (neighborhood_type_ == NeighborhoodType::Moore) {
+            std::vector<std::tuple<int ,int>>  neighborOffsets = {{-1, -1}, {-1, 0}, {-1, 1}, 
+                                                                    {0, -1}, {0, 1}, {1, -1},
+                                                                    {1, 0}, {1, 1}};
+            std::vector<int> neighborhood_states;  
+            // loop through offsets and get neighborhood states according to boundary condition
+            for (const auto& offset: neighborOffsets) { 
+                int offset_x = std::get<0>(offset); 
+                int offset_y = std::get<1>(offset);
+
+                int neighbor_x = x+offset_x; 
+                int neighbor_y = y+offset_y; 
+                int state; 
+                if (boundary_type_ == BoundaryType::Fixed) { 
+                    if (neighbor_x >= 0 && neighbor_x < grid_.size() && neighbor_y >= 0
+                        && neighbor_y < grid_[0].size()) {
+                        state = grid_[neighbor_x][neighbor_y];
+                        neighborhood_states.push_back(state);
+                    }
+                }
+                else if (boundary_type_ == BoundaryType::Periodic) {
+                    // wrapping around 
+                    neighbor_x = (neighbor_x + grid_.size()) % grid_.size();
+                    neighbor_y = (neighbor_y + grid_[0].size()) % grid_[0].size();
+                    state = grid_[neighbor_x][neighbor_y];
+                    neighborhood_states.push_back(state); 
+                }
+                else if (boundary_type_ == BoundaryType::Cutoff) {
+                    if (neighbor_x >= 0 && neighbor_x < grid_.size() && neighbor_y >= 0
+                        && neighbor_y < grid_[0].size()) {
+                        state = grid_[neighbor_x][neighbor_y];
+                        neighborhood_states.push_back(state);
+                    }
+                }
             }
-            // ...
+            return neighborhood_states; 
+        }
         }
     public:
         Automata(std::string file, int num_steps, int dim_0, int dim_1,
                 int num_states, std::vector<std::string> states, 
-                NeighborhoodType neighbors, BoundaryType boundary_type,
-                std::function<int()> init_func = &start_grid,
-                std::function<int(int, int, const std::vector<std::vector<int>>&)> rule_func = &default_rules)  //probably will delete this constructor
+                NeighborhoodType neighbors, BoundaryType boundary_type)  //probably will delete this constructor
             : file_(file), num_steps_(num_steps), dim_0_(dim_0), dim_1_(dim_1), 
               num_states_(num_states), states_(states), neighborhood_type_(neighbors), boundary_type_(boundary_type)
         {
             //setup from .txt file
+            //SET init function as default
             initialize_grid();
+            //set default rule function
             std::cout << "Time step 0 " << std::endl;
             print();
             //run_simulation();   //performs number of steps that user passes in
@@ -101,15 +139,17 @@ class Automata
                 apply_rules();
             }
         }
+        */
         void run_simulation()   //TODO: remove and replace in main
         {
             for(int t = 1; t < num_steps_; t++) //t represents time
             {
                 std::cout << "Time step: " << t << std::endl;
-                step();
-                print();
+                apply_rules();
+                save_grid(output_file);
             }
-        }*/
+        }
+
         void initialize_grid() {
             std::vector<std::vector<int>> grid(dim_0_, std::vector<int>(dim_1_));
             grid_ = grid;
@@ -121,13 +161,17 @@ class Automata
         }
         void apply_rules() {
             std::vector<std::vector<int>> new_grid(dim_0_, std::vector<int>(dim_1_));
-            getNeighborState();
+            std::vector<int> n_states;
             for (int i = 0; i < dim_0_; ++i) {
                 for (int j = 0; j < dim_1_; ++j) {
-                    new_grid[i][j] = rule_func(i, j, 1);
+                    n_states = getNeighborState(i, j);
+                //TODO: correct inputs to rule function 
+                    //new_grid[i][j] = rule_func(i, j, );
+                    //pass in grid[i][j], n_states, neighbors
                 }
             }
             grid_ = new_grid;
+
     //rules=straight: all cells on grid(if 0, go to 1; if 1, go to 2. Go up to num states)
             //neighbor: if 0, if any neighbor is 1, then turn to next 1
             //majority: if most of neighbor are a certain type, then change
@@ -193,12 +237,15 @@ class Automata
         {
             return num_steps_;
         }
+        void set_output_file(std::string n_file)
+        {
+            output_file = n_file;
+        }
 };
 
 int main(void)
 {
     std::string file = "user_input.txt";
-    std::string output_file = "disease_output.txt";
     std::vector<std::string> states;
     states.push_back("healthy");
     states.push_back("infected");
@@ -207,12 +254,7 @@ int main(void)
     Automata disease_simulation(file, 10, 10, 10, 3, states, 
                                 NeighborhoodType::VonNeumann, BoundaryType::Fixed);
 
-    for (int i = 0; i < disease_simulation.n_steps(); ++i)
-        {
-            disease_simulation.save_grid(output_file);
-            disease_simulation.apply_rules();
-            //increment time step?
-        }
-
+    //rule function calls neighborhood states, outputs states of neighbors into a vector
+        //takinging into account neighbor states
     return 0;
 }
