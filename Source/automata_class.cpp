@@ -71,15 +71,15 @@ class Automata
                 int num_states, std::vector<std::string> states, 
                 NeighborhoodType neighbors, BoundaryType boundary_type,
                 std::function<int()> init_func = &start_grid,
-                std::function<int(int, int, const std::vector<std::vector<int>>&)> rule_func)  //probably will delete this constructor
+                std::function<int(int, int, const std::vector<std::vector<int>>&)> rule_func = &default_rules)  //probably will delete this constructor
             : file_(file), num_steps_(num_steps), dim_0_(dim_0), dim_1_(dim_1), 
               num_states_(num_states), states_(states), neighborhood_type_(neighbors), boundary_type_(boundary_type)
         {
             //setup from .txt file
-            grid_ = initialize_grid();
+            initialize_grid();
             std::cout << "Time step 0 " << std::endl;
             print();
-            run_simulation();   //performs number of steps that user passes in
+            //run_simulation();   //performs number of steps that user passes in
         }
         ~Automata()//deconstructor
         {}
@@ -88,7 +88,7 @@ class Automata
             //read from .txt file
             //save into private members
         }
-        void step()
+        /*void step()
         {
             //new grid, has changes from time step
             std::vector<std::vector<int>> new_grid(dim_0_, std::vector<int>(dim_1_));
@@ -98,9 +98,8 @@ class Automata
                 //new_grid = apply_rules(grid_, &moore);
             }
             else{
-                new_grid = apply_rules(grid_, &von_neumann_rules);
+                apply_rules();
             }
-            update_grid(grid_, new_grid);
         }
         void run_simulation()   //TODO: remove and replace in main
         {
@@ -110,30 +109,34 @@ class Automata
                 step();
                 print();
             }
-        }
-        std::vector<std::vector<int>> initialize_grid() {
-    std::vector<std::vector<int>> grid(dim_0_, std::vector<int>(dim_1_));
-        for (int i = 0; i < dim_0_; ++i) {
-            for (int j = 0; j < dim_1_; ++j) {
-                grid[i][j] = start_grid();
-            }
-        }
-        return grid;
-        }
-        std::vector<std::vector<int>> apply_rules(const std::vector<std::vector<int>>& grid,
-                                        int (rule_func) (int, int, const std::vector<std::vector<int>>&, int)) {
-            std::vector<std::vector<int>> new_grid(dim_0_, std::vector<int>(dim_1_));
+        }*/
+        void initialize_grid() {
+            std::vector<std::vector<int>> grid(dim_0_, std::vector<int>(dim_1_));
+            grid_ = grid;
             for (int i = 0; i < dim_0_; ++i) {
                 for (int j = 0; j < dim_1_; ++j) {
-                    new_grid[i][j] = rule_func(i, j, grid, 1);
+                    grid_[i][j] = start_grid();
                 }
             }
-            return new_grid;
         }
-    
-        void update_grid(std::vector<std::vector<int>>& grid,
-        const std::vector<std::vector<int>>& new_grid) {
-            grid = new_grid;
+        void apply_rules() {
+            std::vector<std::vector<int>> new_grid(dim_0_, std::vector<int>(dim_1_));
+            getNeighborState();
+            for (int i = 0; i < dim_0_; ++i) {
+                for (int j = 0; j < dim_1_; ++j) {
+                    new_grid[i][j] = rule_func(i, j, 1);
+                }
+            }
+            grid_ = new_grid;
+    //rules=straight: all cells on grid(if 0, go to 1; if 1, go to 2. Go up to num states)
+            //neighbor: if 0, if any neighbor is 1, then turn to next 1
+            //majority: if most of neighbor are a certain type, then change
+            //custom: user inputs rule function. All the user needs to do is input custom
+            //      rule function that just returns an int
+        }
+        int default_rules(int i, int j)
+        {
+            //return state of the cell depending on the other 
         }
         int start_grid()
         //function that will set initial state of each cell on graph
@@ -167,36 +170,49 @@ class Automata
                 std::cout << std::endl;
             }
         }
-        // Save the grid
-        void saveGrid(std::string file_path)
+        void save_grid(std::string file_path)   //output filepath
         {
             std::ofstream out(file_path, std::ios::app);
-            if (!out.is_open())
+            if (!out.is_open()) //if file is closed
             {
                 out << "time_step, x, y, value" << std::endl;
             }
             else
             {
-                for (int i = 0; i < dim_1_; ++i)
+                for (int i = 0; i < dim_1_; ++i)    //print out indeces and graph
                 {
                     for (int j = 0; j < dim_0_; ++j)
                     {
-                        out << time_step_ << ", " << j << ", " << i << ", " << grid_[i][j] << std::endl;
+                        out << time_step_ << ", " << j << ", ";
+                        out << i << ", " << grid_[i][j] << std::endl;
                     }
                 }
             }
+        }
+        int n_steps()
+        {
+            return num_steps_;
         }
 };
 
 int main(void)
 {
     std::string file = "user_input.txt";
-
+    std::string output_file = "disease_output.txt";
     std::vector<std::string> states;
     states.push_back("healthy");
     states.push_back("infected");
     states.push_back("dead");
 
-    Automata disease_simulation(file, 10, 10, 10, 3, states, "VonNeumann", "Fixed");
+    Automata disease_simulation(file, 10, 10, 10, 3, states, 
+                                NeighborhoodType::VonNeumann, BoundaryType::Fixed);
+
+    for (int i = 0; i < disease_simulation.n_steps(); ++i)
+        {
+            disease_simulation.save_grid(output_file);
+            disease_simulation.apply_rules();
+            //increment time step?
+        }
+
     return 0;
 }

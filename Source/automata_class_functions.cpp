@@ -15,7 +15,8 @@
 #include "myclass.h"
 
     //rule function - takes into account 4 adjacent cells to set state of cell in question
-    int von_neumann_rules(int i, int j, const std::vector<std::vector<int>>& grid, int boundary_type)   //pass indexes, grid by ref
+    int von_neumann_rules(int i, int j, const std::vector<std::vector<int>>& grid, 
+                            int boundary_type, int neighborhood_type)   //pass indexes, grid by ref
     {                                               
         int state;  //saves the int value of the state that the cell is in
         int row;    //used to ensure fixed/periodic boundaries followed
@@ -30,6 +31,7 @@
         }
         else if(state == 1 && boundary_type == 1) //if cell is unaffected and boundary type is fixed
         {
+            //get_neighbors(boundary_type, grid)
             for(int dx = -1; dx < 1; dx++)
             {
                 for(int dy = -1; dy < 1; dy++)
