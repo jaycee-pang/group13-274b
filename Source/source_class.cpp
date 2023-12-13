@@ -47,11 +47,15 @@ private:
 public:
     // Constructor
     CellularAutomata(int width, int height, BoundaryType bType, NeighborhoodType nType)
-        : gridWidth(width), gridHeight(height), boundaryType(bType), neighborhoodType(nType) {
-            initFunc = std::bind(&CellularAutomata::defaultInitFunc, this, std::placeholders::_1, std::placeholders::_2);
-            ruleFunc = std::bind(&CellularAutomata::defaultRuleFunc, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-            initializeGrid();
-    }
+    : gridWidth(width), gridHeight(height), boundaryType(bType), neighborhoodType(nType) {
+        if (gridWidth <= 0 || gridHeight <= 0) {
+            throw std::invalid_argument("Width and height must be positive.");
+        }
+
+        initFunc = [this](int x, int y) { return this->defaultInitFunc(x, y); };
+        ruleFunc = [this](int x, int y, const std::vector<std::vector<int>>& grid) { return this->defaultRuleFunc(x, y, grid); };
+        initializeGrid();
+}
 
     // Initialize the grid
     void initializeGrid() {
