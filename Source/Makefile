@@ -29,7 +29,10 @@ BIN_DIR     = ../Bin
 # created by this Makefile.
 AUTOMATA_EXECUTABLES = automata
 AUTOMATA_OBJS = automata_class_functions.o Source.o moore.o
+AUTOMATA_OBJS_TEST = source_automata_compiled_class.o rules.o
 AUTOMATA_LIB = libautomata.a
+AUTOMATA_LIB_TEST = test_libautomata.a
+
 
 #temporary testing makefile for disease application of cellular automata
 test_disease_auto:	$(INC_DIR)/myclass.h $(INC_DIR)/Source.h
@@ -48,6 +51,19 @@ Source.o:
 
 moore.o:
 	$(CPP) $(CPP_LIBFLAGS) moore.cpp -I$(INC_DIR)
+
+source_automata_compiled_class.o: 
+	$(CPP) $(CPP_LIBFLAGS) source_automata_compiled_class.cpp -I$(INC_DIR)
+
+rules.o:
+	$(CPP) $(CPP_LIBFLAGS) rules.cpp -I$(INC_DIR)
+
+test_libautomata.a: $(AUTOMATA_OBJS_TEST)
+	ar -ru $(AUTOMATA_LIB_TEST) $(AUTOMATA_OBJS_TEST)
+	mv $(AUTOMATA_LIB_TEST) $(LIB_DIR)
+	rm $(AUTOMATA_OBJS_TEST)
+
+
 
 #create+update automata class library. Move to /Lib
 libautomata.a: $(AUTOMATA_OBJS)
