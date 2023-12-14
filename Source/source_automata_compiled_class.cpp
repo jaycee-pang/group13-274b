@@ -255,8 +255,9 @@ void CellularAutomata::save_grid()
             for (int j = 0; j < gridWidth; ++j)
             {
                 out << num_steps << ", " << j << ", ";
-                out << i << ", " << grid[i][j] << std::endl;
+                out << i << ", " << grid[i][j];
             }
+            out << std::endl;
         }
         out.close();
     }

@@ -64,7 +64,6 @@ test_libautomata.a: $(AUTOMATA_OBJS_TEST)
 	rm $(AUTOMATA_OBJS_TEST)
 
 
-
 #create+update automata class library. Move to /Lib
 libautomata.a: $(AUTOMATA_OBJS)
 	ar -ru $(AUTOMATA_LIB) $(AUTOMATA_OBJS)
