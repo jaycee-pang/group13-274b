@@ -96,6 +96,13 @@ public:
     void save_params();
 };
 
+// Create a cellular automata object from the input parameters and run a simulation. 
+int input_simulation(int width, int height, int num_states, int radius, BoundaryType btype, 
+                        NeighborhoodType ntype, std::function<int(int, int, int)> customInitFunc, 
+                        std::function<int(int, int, const std::vector<int> &)> customRuleFunc, 
+                        std::string file_path,
+                        int sim_steps); 
+
 
 // Rule Functions 
 //      Take in current state of cell, number of states possible, and states of neighbors 

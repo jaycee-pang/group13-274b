@@ -1,6 +1,9 @@
 // MSSE Berkeley
 // CHEM 274B: Group 13, Final Project
 
+// Group 13
+// Date Created: 12/14/2023 
+// Date Updated: 12/14/2023
 // Cellular Automata Application: model a simulation based on user input from terminal
 // Directory path: final/Applications
 
