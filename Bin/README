@@ -1,0 +1,18 @@
+# Master of Molecular Sciences and Software Engineering
+# UC Berkeley
+# 
+# Group 13
+# Date Created: December 14, 2023
+#
+# Directory Path: final/Bin/
+
+This directory contains executables for tests for 
+the Cellular Automata functionalities 
+
+LIST OF SUBDIRECTORIES IN THIS DIRECTORY:
+(no subdirectories)
+
+LIST OF FILES IN THIS DIRECTORY:
+- README: (is this file)
+
+- Makefile: contains commands that build the tests for testing CA functionalities 

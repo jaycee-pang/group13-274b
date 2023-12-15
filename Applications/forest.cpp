@@ -3,7 +3,8 @@
 
 // Cellular Automata Application: model a forest environment 
 // Directory path: final/Applications
-// Uses cellular automata to model a forest. 
+// Uses cellular automata to model the evolution of a forest organism. 
+// There are 6 states re
 
 #include "neighborhoods.h"
 #include <iostream>
@@ -23,19 +24,19 @@ const int Sprout = 3;
 const int Leaves = 4; 
 const int Flower = 5; 
 
-auto init_forest_with_prob(double fertilityProb) {
-    return [=](int x, int y, int max_states) -> int {
-        // put seeds
-        double prob = static_cast<double>(rand()) / RAND_MAX;
-        if (prob < fertilityProb / 2) {
-            return Seed;
-        } else if (prob < fertilityProb) {
-            return Soil;
-        } else {
-            return Empty;
-        }
-    };
-}
+// auto init_forest_with_prob(double fertilityProb) {
+//     return [=](int x, int y, int max_states) -> int {
+//         // put seeds
+//         double prob = static_cast<double>(rand()) / RAND_MAX;
+//         if (prob < fertilityProb / 2) {
+//             return Seed;
+//         } else if (prob < fertilityProb) {
+//             return Soil;
+//         } else {
+//             return Empty;
+//         }
+//     };
+// }
 
 std::function<int(int, int, int, double)> init_forest = [](int x, int y, int max_states, double fertilityProb) -> int
 {   
@@ -98,7 +99,7 @@ int forest_rules(int current_state, int num_states, std::vector<int> neighborhoo
             return Flower;
         } 
         else { 
-            std::cout << "Flower was too croweded. Back to soil" <<std::endl;s
+            std::cout << "Flower was too croweded. Back to soil" <<std::endl;
             return Soil;
         }
         
@@ -139,7 +140,7 @@ int main(void) {
                                                 {2, "Seed"}, {3,"Sprout"},
                                                 {4:"Leaves"}, {5, "Flower"} };
     int state_count; 
-    for const (const auto & pair: state_map){
+    for (const auto & pair: state_map){
         state_count = forest.countCellState(pair.first);
         std::cout << pair.second << " count: " << state_count << std::endl;
     }

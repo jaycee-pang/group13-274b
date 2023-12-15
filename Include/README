@@ -1,0 +1,18 @@
+# Master of Molecular Sciences and Software Engineering
+# UC Berkeley
+# 
+# Group 13
+# Date Created: December 14, 2023
+# Date Last Updated: December 14, 2023 
+# Directory Path: final/Include/
+
+API for the Cellular Automata class 
+
+LIST OF SUBDIRECTORIES IN THIS DIRECTORY:
+(no subdirectories)
+
+LIST OF FILES IN THIS DIRECTORY:
+- README: (is this file)
+- source_automata_compiled.h: API to cellular automata class and functions 
+
+
