@@ -6,7 +6,7 @@
 // Uses cellular automata to model the evolution of a forest organism. 
 // There are 6 states re
 
-#include "neighborhoods.h"
+// #include "neighborhoods.h"
 #include <iostream>
 #include <vector>
 #include <random>
@@ -37,10 +37,13 @@ const int Flower = 5;
 //         }
 //     };
 // }
+int init_forest(int , int , int ); 
+int forest_rules(int , int , std::vector<int> );
 
-std::function<int(int, int, int, double)> init_forest = [](int x, int y, int max_states, double fertilityProb) -> int
+int init_forest (int x, int y, int max_states) 
 {   
     // put seeds 
+    double fertilityProb = 0.65; 
     double prob = static_cast<double>(rand()) / RAND_MAX; 
     if (prob < fertilityProb/2) {
         return Seed;
@@ -49,7 +52,7 @@ std::function<int(int, int, int, double)> init_forest = [](int x, int y, int max
         return Soil; 
     }
     else { return Empty; }
-};
+}
 int forest_rules(int current_state, int num_states, std::vector<int> neighborhood_states) {
     
     if (current_state == 0) {
@@ -105,7 +108,7 @@ int forest_rules(int current_state, int num_states, std::vector<int> neighborhoo
         
     }
     else { return current_state; }
-}; 
+} 
 int main(void) {
     int width = 15;
     int height = 15;
@@ -122,11 +125,11 @@ int main(void) {
         radius,
         BoundaryType::Fixed,        
         NeighborhoodType::Moore,  
-        std::bind(init_forest, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, 0.5),
-        std::bind(forest_rules, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+        init_forest,
+        forest_rules,
         outfile
     );
-    forest.setRuleFunction(std::bind(forest_rules, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+    // forest.setRuleFunction(std::bind(forest_rules, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
     std::cout << "States:" << std::endl; 
     std::cout << "|| Empty || Soil || Seed || Sprout || Leaves || Flower ||" <<std::endl;
     std::cout <<"Starting simulation"<<std::endl;
@@ -135,15 +138,18 @@ int main(void) {
         forest.step(); 
         forest.displayGrid(); 
     }
-    std::cout << "Simulation complete!"<< endl << "Results: " << std::endl;
-    std::map < int, std::string> state_map = {{0, "Empty"}, {1, "Soil"}, 
-                                                {2, "Seed"}, {3,"Sprout"},
-                                                {4:"Leaves"}, {5, "Flower"} };
+    std::cout << "Simulation complete!"<< std::endl << "Results: " << std::endl;
+    std::map<int, std::string> state_map;
+    state_map[0] = "Empty";
+    state_map[1] = "Soil";
+    state_map[2] = "Seed";
+    state_map[3] = "Sprout";
     int state_count; 
     for (const auto & pair: state_map){
         state_count = forest.countCellState(pair.first);
         std::cout << pair.second << " count: " << state_count << std::endl;
     }
+
     
 
     return 0;
