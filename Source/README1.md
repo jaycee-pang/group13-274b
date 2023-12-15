@@ -49,22 +49,13 @@ Create automata static library
 
 ### TODO
 ###### Laura
-- [``] allow input for up to .5 * n*m states
 
 ###### Jaycee
 - [``] complete 'forest_simulation' script in /Applications
-- [``] alternate constructor to pass in just the file path
-    - then call function to parse data to attributes
 
 ###### Shirley
 Place in separate .cpp file in Source:
-- [``] implement reading from `user_input.txt`
 - [``] complete graphing utils
 - [``] read simulation vector and timesteps from .txt file, output to graph, create gif
 
 ###### Jeffrey
-
-Completed:
-- [`c`] move run simulation function to main
-- [`c`] allow for specification of x and y dimensions of graph
-- [`c`] complete disease automaton application
