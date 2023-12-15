@@ -1,3 +1,22 @@
+// Chem 274B: Software Engineering Fundataions for
+//            Molecular Sciences 
+// Group 13 
+// 
+// Directory Path: final/Source/ 
+//
+// Date Created: December 10, 2023
+// Date Updated: December 14, 2023 
+// 
+// C++ implementation of a cellular automata class
+// Contains functions for initialization of the grid with parameters: 
+//      - number of states, setting states for initial grid
+//      - neighborhood and boundary types 
+//      - running a simulation based on a chosen rule
+//      - updating grid 
+//      - methods for visualization step preparation 
+//     
+// The API (include) file is source_automata_compiled.h, which includes prototypes
+// of the functions defined in this file.
 #include <iostream>
 #include <vector>
 #include <functional>
@@ -76,10 +95,14 @@ CellularAutomata::CellularAutomata(int width, int height, int num_states, int ra
       initFunc(customInitFunc), ruleFunc(customRuleFunc),
       file_path(file_path)
 {
+    if (num_states > (gridWidth * gridHeight)/2) {
+        throw std::invalid_argument("Too many states for this grid size.");
+    }
     if (gridWidth <= 0 || gridHeight <= 0)
     {
         throw std::invalid_argument("Width and height must be positive.");
     }
+    
     initializeGrid();
 }
 
