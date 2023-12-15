@@ -55,11 +55,11 @@ int init_forest (int x, int y, int max_states)
 }
 int forest_rules(int current_state, int num_states, std::vector<int> neighborhood_states) {
     
-    if (current_state == 0) {
+    if (current_state == Empty) {
         
         int soilCount=std::count(neighborhood_states.begin(), neighborhood_states.end(), Soil);
         if (soilCount >= 2) {
-            std::cout << "Seeded!" <<std::endl;
+            // std::cout << "Seeded!" <<std::endl;
             return Seed; 
         }
     }
@@ -84,25 +84,25 @@ int forest_rules(int current_state, int num_states, std::vector<int> neighborhoo
         int sproutCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Sprout);
         int leafCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Leaves);
         if (emptyCount >=1 || soilCount >=2 || leafCount >=1 ) {
-            std::cout << "Space for leaves to grow!" <<std::endl;
+            // std::cout << "Space for leaves to grow!" <<std::endl;
             return Leaves; 
         }
     }
-    else if (current_state == Leaves) {
-        std::cout << "Flowers bloomed!" <<std::endl;
+    else if (current_state == Leaves) { // leaves alwys bloom 
+        // std::cout << "Flowers bloomed!" <<std::endl;
         return Flower; 
     }
-    else if (current_state == Flower) {
+    else if (current_state == Flower) { // flowers can't be too crowded
         int soilCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Soil);
         int emptyCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Empty);
         int flowerCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Flower);
         int leafCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Leaves);
-        if (emptyCount <= 1 || soilCount <= 1 || flowerCount >=4 || leafCount >= 6) { // if it's too crowded, 
-            std::cout << "Flower still in bloom" <<std::endl;
+        if (emptyCount >= 1 || soilCount >= 1 || flowerCount <=6 || leafCount <= 6) { // if it's too crowded, 
+            // std::cout << "Flower still in bloom" <<std::endl;
             return Flower;
         } 
         else { 
-            std::cout << "Flower was too croweded. Back to soil" <<std::endl;
+            // std::cout << "Flower was too croweded. Back to soil" <<std::endl;
             return Soil;
         }
         
@@ -144,6 +144,8 @@ int main(void) {
     state_map[1] = "Soil";
     state_map[2] = "Seed";
     state_map[3] = "Sprout";
+    state_map[4] = "Leaves";
+    state_map[5] = "Flower";
     int state_count; 
     for (const auto & pair: state_map){
         state_count = forest.countCellState(pair.first);

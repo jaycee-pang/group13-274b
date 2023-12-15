@@ -1,9 +1,9 @@
 // MSSE Berkeley
 // CHEM 274B: Group 13, Final Project
 
-// Cellular Automata Application: model a forest environment 
+// Cellular Automata Application: model a simulation based on user input from terminal
 // Directory path: final/Applications
-// Uses cellular automata to model a forest. 
+
 #include <iostream>
 #include <vector>
 #include <functional>
@@ -13,7 +13,7 @@
 #include <string> 
 #include "source_automata_compiled.h"
 std::vector<int> CA_arguments() {
-    std::vector<int> userInput(6); 
+    std::vector<int> userInput(5); 
     std::cout << "Please enter the conditions for the cellular automata"<<std::endl;
     std::vector<std::string> messages= {
         "Enter the width of the grid: ",
@@ -103,7 +103,7 @@ int main(void) {
         btype = BoundaryType::Cutoff; 
     }
     else {btype = BoundaryType::Fixed; }
-    int rule = userInput[5]; 
+   
     int radius = 1; 
     std::string outfile = "output_user_choice.txt";
     CellularAutomata CA(
@@ -117,53 +117,46 @@ int main(void) {
     int num_steps; 
     do {
         std::cout << "Enter the number of steps for the simulation: ";
-        cin >> num_steps; 
-        else {
+        std::cin >> num_steps;
+
+        if (std::cin.fail()) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid input. Please enter a valid integer."<<std::endl;
+            std::cout << "Invalid input. Please enter a valid integer." << std::endl;
+        } else {
+            break;
         }
     } while (true);
-    // "Enter the rule function to use: (0 for default, 1 for majority, 2 for straight, 3 for conditional neighbor): 
+
     std::cout << "Starting simulation" << std::endl;
     CA.displayGrid();
-    do {
-        std::cout <<"Enter the number of steps for the simulation:"
-    
-    for (int i = 0; i< num_steps; i++) {
-        std::cout << "0: Majority \n1: Straight \n2: Conditional neigbor " <<std::endl;
-        std::cout << "Enter rule to apply for step " << i + 1 <<": ";
-        int userRule; 
+
+    for (int i = 0; i < num_steps; i++) {
+        std::cout << "0: Majority \n1: Straight \n2: Conditional neighbor " << std::endl;
+        std::cout << "Enter rule to apply for step " << i + 1 << ": ";
+        int userRule;
         std::cin >> userRule;
-        switch (userRule)
-        {
-        case 0:
-            CA.setRuleFunction(MajorityRule);
-            break;
-        case 2:
-            CA.setRuleFunction(StraightRule);
-            break;
-        case 3:
-            CA.setRuleFunction(NeighborRule);
-            break;
-        default:
-            CA.setRuleFunction(defaultRuleFunc);
-            break;
+
+        switch (userRule) {
+            case 0:
+                CA.setRuleFunction(MajorityRule);
+                break;
+            case 1:
+                CA.setRuleFunction(StraightRule);
+                break;
+            case 2:
+                CA.setRuleFunction(NeighborRule);
+                break;
+            default:
+                CA.setRuleFunction(defaultRuleFunc);
+                break;
         }
-        CA.step(); 
-        CA.displayGrid(); 
+
+        CA.step();
+        CA.displayGrid();
     }
-    std::cout<<"Simulation complete!"<<std::endl;
 
-     
-    
+    std::cout << "Simulation complete!" << std::endl;
 
-    // "Enter the width of the grid: ",
-    //     "Enter the height of the grid: ",
-    //     "Enter the number of states: ",
-    //     "Enter the neighborhood type (0 for VonNeuman, 1 for Moore): ",
-    //     "Enter the boundary condition (0 for periodic, 1 for fixed, 2 for cutoff): ",
-    //     "Enter the rule function to use: (0 for default, 1 for majority, 2 for straight, 3 for conditional neighbor):  "
-  
     return 0;
 }
