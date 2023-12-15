@@ -1,11 +1,11 @@
 # import packages
-import argparse
+import os
 import glob
+import argparse
+
 import pandas as pd 
 import numpy as np
 import matplotlib.pyplot as plt
-import os
-
 from matplotlib.animation import FuncAnimation
 
 
