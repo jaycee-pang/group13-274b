@@ -35,6 +35,6 @@ test_source_automata_compiled_class: $(INC_DIR)/source_automata_compiled.h
 	
 more_tests: $(INC_DIR)/source_automata_compiled.h
 	$(CPP) $(CPPFLAGS) more_tests more_tests.cpp \
-	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
+	-I$(INC_DIR) $(LIB_DIR)/cp_libautomata.a
 	mv more_tests $(BIN_DIR)
 	cd $(BIN_DIR); ./more_tests

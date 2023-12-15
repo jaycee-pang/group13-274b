@@ -100,6 +100,8 @@ CellularAutomata::CellularAutomata(const std::string &file_path, int time_step, 
 
     in >> gridWidth >> gridHeight >> num_states >> radius >> end_steps >> bTypeStr >> nTypeStr;
 
+    ///but where do we use end_steps?
+
     if (bTypeStr == "Periodic")
     {
         boundaryType = BoundaryType::Periodic;
@@ -148,17 +150,32 @@ void CellularAutomata::loadGrid(std::ifstream &in_stream, int target_time)
     std::string header;
     bool reach_time = false;
 
-    std::cout << header << std::endl;
+    std::getline(in_stream, header);
+    std::getline(in_stream, header);    //move header to first line of values
+    std::string pre_step, pre_x, pre_y, pre_value;  //values inputted as strings
     int step, x, y, value;
     
-    while (in_stream >> step >> x >> y >> value)
+    int count = 0;
+    std::cout << "entering while loop " << std::endl;
+    while(std::getline(in_stream, header, '\n') && count < 20)
     {
+        in_stream >> pre_step >> pre_x >> pre_y >> pre_value;
+        //convert step, x, y, value to int
+        step = std::stoi(pre_step);
+        x = std::stoi(pre_x);
+        y = std::stoi(pre_y);
+        value = std::stoi(pre_value);
+        std::cout <<"step: " << step << " x,y,val: " << x << " " << y << " " << value << std::endl;
         if (step == target_time)
         {
             reach_time = true;
             grid[x][y] = value;
         }
+        ++count;
+        std::getline(in_stream, header);
     }
+
+    std::cout << "Closing file" << std::endl;
     in_stream.close();
     if (!reach_time) // if never reached desired target time
     {
