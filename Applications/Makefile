@@ -34,3 +34,9 @@ disease_automata:$(LIB_DIR)/test_libautomata.a
 	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
 	mv disease_automata $(BIN_DIR)
 	cd $(BIN_DIR); ./disease_automata
+
+forest_automata:$(LIB_DIR)/test_libautomata.a
+	$(CPP) $(CPPFLAGS) forest forest.cpp \
+	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
+	mv forest $(BIN_DIR)
+	cd $(BIN_DIR); ./forest

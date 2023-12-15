@@ -1,8 +1,0 @@
-file
-10
-10
-10
-3
-"healthy", "infected", "dead"
-Moore
-Fixed
