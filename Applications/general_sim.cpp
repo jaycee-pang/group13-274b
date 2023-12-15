@@ -105,7 +105,7 @@ int main(void) {
     else {btype = BoundaryType::Fixed; }
     int rule = userInput[5]; 
     int radius = 1; 
-    std::string outfile = "output_user_choice.txt"
+    std::string outfile = "output_user_choice.txt";
     CellularAutomata CA(
         width,
         height,
@@ -113,23 +113,31 @@ int main(void) {
         radius,
         btype,
         ntype,
-        outfile
-    );
-
+        outfile);
+    int num_steps; 
+    do {
+        std::cout << "Enter the number of steps for the simulation: ";
+        cin >> num_steps; 
+        else {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid input. Please enter a valid integer."<<std::endl;
+        }
+    } while (true);
     // "Enter the rule function to use: (0 for default, 1 for majority, 2 for straight, 3 for conditional neighbor): 
     std::cout << "Starting simulation" << std::endl;
+     
+    do {
+        std::cout <<"Enter the number of steps for the simulation:"
     CA.displayGrid();
     for (int i = 0; i< num_steps; i++) {
-        std::cout << "0: default \n1: Majority \n2: Straight \n3: Conditional neigbor" std::endl;
+        std::cout << "0: Majority \n1: Straight \n2: Conditional neigbor " <<std::endl;
         std::cout << "Enter rule to apply for step " << i + 1 <<": ";
         int userRule; 
         std::cin >> userRule;
         switch (userRule)
         {
         case 0:
-            CA.setRuleFunction(std::bind(defaultRuleFunc, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
-            break;
-        case 1:
             CA.setRuleFunction(std::bind(majority_rule, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
             break;
         case 2:
@@ -139,8 +147,7 @@ int main(void) {
             CA.setRuleFunction(std::bind(conditional_neighbor_rule, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
             break;
         default:
-            std::cout << "Invalid rule choice. Using default rule." << std::endl;
-            CA.setRuleFunction(std::bind(defaultRuleFunc, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+            // CA.setRuleFunction(std::bind(defaultRuleFunc, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
             break;
         }
         CA.step(); 
