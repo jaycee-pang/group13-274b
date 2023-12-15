@@ -99,7 +99,7 @@ CellularAutomata::CellularAutomata(const std::string &file_path, int time_step, 
     int end_steps;
 
     in >> gridWidth >> gridHeight >> num_states >> radius >> end_steps >> bTypeStr >> nTypeStr;
-
+    //end steps == num steps... Where the simulation starts
     if (bTypeStr == "Periodic")
     {
         boundaryType = BoundaryType::Periodic;
@@ -121,8 +121,7 @@ CellularAutomata::CellularAutomata(const std::string &file_path, int time_step, 
     {
         neighborhoodType = NeighborhoodType::Moore;
     }
-
-    loadGrid(in, time_step);
+    loadGrid(in, time_step);    //pass in input file, num steps to complete
 }
 
 // Destructor
@@ -150,6 +149,7 @@ void CellularAutomata::loadGrid(std::ifstream &in_stream, int target_time)
     bool reach_time = false;
 
     std::getline(in_stream, header);
+    std::cout << header << std::endl;
     int step, x, y, value;
 
     while (in_stream >> step >> x >> y >> value)
@@ -163,7 +163,8 @@ void CellularAutomata::loadGrid(std::ifstream &in_stream, int target_time)
     in_stream.close();
     if (!reach_time) // if never reached desired target time
     {
-        std::cout << "Input txt file does not contain cell values for time: " << target_time << ", using defaultinitFunc..." << std::endl;
+        std::cout << "Input txt file does not contain cell values for time: ";
+        std::cout << target_time << ", using defaultinitFunc..." << std::endl;
         initializeGrid();
     }
 }
