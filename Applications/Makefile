@@ -27,10 +27,15 @@ LIB_DIR     = ../Lib
 BIN_DIR     = ../Bin
 
 # List of executables generated
-EXECUTABLES	= disease_automata
+EXECUTABLES	= disease_automata forest 
 
 disease_automata:$(LIB_DIR)/test_libautomata.a
 	$(CPP) $(CPPFLAGS) disease_automata disease_simulation.cpp \
 	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
 	mv disease_automata $(BIN_DIR)
 	cd $(BIN_DIR); ./disease_automata
+forest: $(LIB_DIR)/test_libautomata.a
+	$(CPP) $(CPPFLAGS) forest forest.cpp \
+	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
+	mv forest $(BIN_DIR)
+	cd $(BIN_DIR); ./forest
