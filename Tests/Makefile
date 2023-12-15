@@ -32,15 +32,14 @@ test_source_automata_compiled_class: $(INC_DIR)/source_automata_compiled.h
 	$(CPP) $(CPPFLAGS) test_source_automata_compiled_class test_source_automata_compiled_class.cpp \
 	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
 	mv test_source_automata_compiled_class $(BIN_DIR)
+
+more_tests: $(INC_DIR)/source_automata_compiled.h
+	$(CPP) $(CPPFLAGS) more_tests more_tests.cpp \
+	-I$(INC_DIR) $(LIB_DIR)/cp_libautomata.a
+	mv more_tests $(BIN_DIR)
+	cd $(BIN_DIR); ./more_tests
   
-  more_tests: $(INC_DIR)/source_automata_compiled.h
-    $(CPP) $(CPPFLAGS) more_tests more_tests.cpp \
-    -I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
-    mv more_tests $(BIN_DIR)
-    cd $(BIN_DIR); ./more_tests
-
-
-test_majority: $(INC_DIR)/source_automata_compiled.h
+  test_majority: $(INC_DIR)/source_automata_compiled.h
 	$(CPP) $(CPPFLAGS) test_majority test_majority.cpp \
 	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
 	mv test_majority $(BIN_DIR)
@@ -54,6 +53,4 @@ test_neighbor: $(INC_DIR)/source_automata_compiled.h
 	$(CPP) $(CPPFLAGS) test_neighbor test_neighbor.cpp \
 	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
 	mv test_neighbor $(BIN_DIR)
-
-	
 
