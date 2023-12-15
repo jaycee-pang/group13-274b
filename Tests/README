@@ -15,14 +15,10 @@ LIST OF SUBDIRECTORIES IN THIS DIRECTORY:
 LIST OF FILES IN THIS DIRECTORY:
 - README: (is this file)
 
-- Makefile: contains commands that build the tests of the cellular automata class, and its functionalities by running simulations with different parameters 
-- test_quicksort.cpp: [from week9] small verification test of the C++ 
-        Implementation of the Quicksort algorithm
-- test_timed_quicksort.cpp: [from week9] performs k tests of the Quick 
-        sort algorithm varying the size of the array, using random keys 
-        and timing.
-- test_quicksort_rand1.cpp: verification test of randomized (permuted array) op
-        timization of Quicksort 
-
+- Makefile: contains commands that build the tests of the cellular automata class, and its functionalities by running simulations with different parameters
+- test_source_automata.cpp tests constructors and different functions inthe class  
+- test_majority.cpp: tests majority rules with all neighborhood and boundary types 
+- test_straight.cpp: tests straight rules with all neighborhood and boundary types 
+- test_neighbor.cpp: tests neighbor rules with all neighborhood and boundary types 
 
 
