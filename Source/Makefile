@@ -19,7 +19,7 @@ LIB_DIR     = ../Lib
 
 # The object files and libraries generated from the makefile
 AUTOMATA_OBJS = 
-AUTOMATA_OBJS_TEST = source_automata_compiled_class.o rules.o
+AUTOMATA_OBJS_TEST = source_automata_compiled_class.o rules.o run_sim.o
 AUTOMATA_LIB = 
 AUTOMATA_LIB_TEST = test_libautomata.a
 
@@ -30,6 +30,9 @@ source_automata_compiled_class.o:
 # majority, straight, neighbor rule functions
 rules.o:
 	$(CPP) $(CPP_LIBFLAGS) rules.cpp -I$(INC_DIR)
+
+run_sim.o:
+	$(CPP) $(CPP_LIBFLAGS) run_sim.cpp -I$(INC_DIR)
 
 #create+update automata class library. Move to /Lib
 test_libautomata.a: $(AUTOMATA_OBJS_TEST)
