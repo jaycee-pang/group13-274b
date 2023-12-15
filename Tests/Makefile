@@ -39,7 +39,7 @@ more_tests: $(INC_DIR)/source_automata_compiled.h
 	mv more_tests $(BIN_DIR)
 	cd $(BIN_DIR); ./more_tests
   
-  test_majority: $(INC_DIR)/source_automata_compiled.h
+test_majority: $(INC_DIR)/source_automata_compiled.h
 	$(CPP) $(CPPFLAGS) test_majority test_majority.cpp \
 	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
 	mv test_majority $(BIN_DIR)
