@@ -25,8 +25,16 @@ LIB_DIR     = ../Lib
 # Executable programs
 BIN_DIR     = ../Bin
 
+EXECUTABLES	= test_source_automata_compiled_class, more_tests
 
 test_source_automata_compiled_class: $(INC_DIR)/source_automata_compiled.h
 	$(CPP) $(CPPFLAGS) test_source_automata_compiled_class test_source_automata_compiled_class.cpp \
 	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
 	mv test_source_automata_compiled_class $(BIN_DIR)
+
+	
+more_tests: $(INC_DIR)/source_automata_compiled.h
+	$(CPP) $(CPPFLAGS) more_tests more_tests.cpp \
+	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
+	mv more_tests $(BIN_DIR)
+	cd $(BIN_DIR); ./more_tests
