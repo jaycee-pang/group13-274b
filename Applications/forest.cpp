@@ -4,14 +4,6 @@
 // Cellular Automata Application: model a forest environment 
 // Directory path: final/Applications
 // Uses cellular automata to model a forest. 
-// with regards to the following user inputs:
-//      - Events: draught, fire, famine, flood, rain
-const int Empty = 0; 
-const int Soil = 1; 
-const int Seed = 2; 
-const int Sprout = 3; 
-const int Leaves = 4; 
-const int Flower = 5; 
 
 #include "neighborhoods.h"
 #include <iostream>
@@ -20,7 +12,17 @@ const int Flower = 5;
 #include <cstdlib>
 #include <algorithm>
 #include <functional>
+#include <string> 
+#include <map> 
 #include "source_automata_compiled.h"  
+
+const int Empty = 0; 
+const int Soil = 1; 
+const int Seed = 2; 
+const int Sprout = 3; 
+const int Leaves = 4; 
+const int Flower = 5; 
+
 auto init_forest_with_prob(double fertilityProb) {
     return [=](int x, int y, int max_states) -> int {
         // put seeds
@@ -123,6 +125,7 @@ int main(void) {
         std::bind(forest_rules, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
         outfile
     );
+    forest.setRuleFunction(std::bind(forest_rules, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
     std::cout << "States:" << std::endl; 
     std::cout << "|| Empty || Soil || Seed || Sprout || Leaves || Flower ||" <<std::endl;
     std::cout <<"Starting simulation"<<std::endl;
@@ -131,6 +134,16 @@ int main(void) {
         forest.step(); 
         forest.displayGrid(); 
     }
+    std::cout << "Simulation complete!"<< endl << "Results: " << std::endl;
+    std::map < int, std::string> state_map = {{0, "Empty"}, {1, "Soil"}, 
+                                                {2, "Seed"}, {3,"Sprout"},
+                                                {4:"Leaves"}, {5, "Flower"} };
+    int state_count; 
+    for const (const auto & pair: state_map){
+        state_count = forest.countCellState(pair.first);
+        std::cout << pair.second << " count: " << state_count << std::endl;
+    }
+    
 
     return 0;
 }
