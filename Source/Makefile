@@ -19,8 +19,8 @@ LIB_DIR     = ../Lib
 
 # The object files and libraries generated from the makefile
 
-AUTOMATA_OBJS = cp_source_automata_compiled_class.o rules.o run_sim.o
-AUTOMATA_OBJS_TEST = source_automata_compiled_class.o rules.o
+AUTOMATA_OBJS = cp_source_automata_compiled_class.o rules.o 
+AUTOMATA_OBJS_TEST = source_automata_compiled_class.o rules.o run_sim.o
 AUTOMATA_LIB = 
 AUTOMATA_LIB_TEST = test_libautomata.a
 
