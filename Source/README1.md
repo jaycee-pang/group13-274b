@@ -67,3 +67,4 @@ Place in separate .cpp file in Source:
 Completed:
 - [`c`] move run simulation function to main
 - [`c`] allow for specification of x and y dimensions of graph
+- [`c`] complete disease automaton application
