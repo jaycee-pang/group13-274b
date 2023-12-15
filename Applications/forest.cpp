@@ -3,161 +3,148 @@
 
 // Cellular Automata Application: model a forest environment 
 // Directory path: final/Applications
-// Uses cellular automata to model a forest. 
-// with regards to the following user inputs:
-//      - Events: draught, fire, famine, flood, rain
+// Uses cellular automata to model the evolution of a forest organism. 
+// There are 6 states re
 
-#include <iostream> 
-#include <vector>  
-#include <cstdlib> 
-#include <ctime>  
-#include <random>  
-#include <algorithm> 
-#include "Source.h"
 #include "neighborhoods.h"
-const int EMPTY = 0;
-const int FLORA = 1;
-const int TREE = 3; 
-const int SPROUT = 5; 
-const int FAUNA = 2;
-const int BABY = 4; 
-const int ADULT = 6; 
+#include <iostream>
+#include <vector>
+#include <random>
+#include <cstdlib>
+#include <algorithm>
+#include <functional>
+#include <string> 
+#include <map> 
+#include "source_automata_compiled.h"  
 
-enum State {
-    EMPTY, FLORA, TREE, SPROUT, FAUNA, BABY, ADULT
-}; 
+const int Empty = 0; 
+const int Soil = 1; 
+const int Seed = 2; 
+const int Sprout = 3; 
+const int Leaves = 4; 
+const int Flower = 5; 
 
-struct Cell {
-    State state; 
-    Cell(State s) : state(s) {}
+// auto init_forest_with_prob(double fertilityProb) {
+//     return [=](int x, int y, int max_states) -> int {
+//         // put seeds
+//         double prob = static_cast<double>(rand()) / RAND_MAX;
+//         if (prob < fertilityProb / 2) {
+//             return Seed;
+//         } else if (prob < fertilityProb) {
+//             return Soil;
+//         } else {
+//             return Empty;
+//         }
+//     };
+// }
+
+std::function<int(int, int, int, double)> init_forest = [](int x, int y, int max_states, double fertilityProb) -> int
+{   
+    // put seeds 
+    double prob = static_cast<double>(rand()) / RAND_MAX; 
+    if (prob < fertilityProb/2) {
+        return Seed;
+    }
+    else if (prob < fertilityProb) {
+        return Soil; 
+    }
+    else { return Empty; }
 };
-std::vector<std::vector<Cell>> grid;
-// in moore: sum += static_cast<int>(grid[i][j].state); 
-
-// user should specify probabilities? 
-// test function takes input from user (or generate txt file )
-// user inputs size, 
-std::vector<std::pair<int, std::string>> states; 
-// do we need state information (neighbor's states) 
-// does this ^ need to go in neighborhood function 
-// make a class for cellular automata, need to acces 
-int init_forest(int i, int j, double emptyProb, double floraProb, double faunaProb) {
-    double randValue = static_cast<double>(rand()) / RAND_MAX; 
-    if (randValue < emptyProb) {
-        return EMPTY;
-    } 
-    else if (randValue < emptyProb + floraProb) {
-        return FLORA;
-    } 
-    else {
-        return FAUNA;
-    }
-}
-void step(std::vector<std::vector<int>>& grid, int row, int col)
-{
-
-}
-
-
-
-int forest_rules(const std::vector<std::vector<int>>& grid, int row, int col) {
-    int sum = moore(grid, row, col, PERIODIC);
-    if (grid[row][col] == EMPTY) {
-        if (sum == 1) {         // if one neighbor
-            return FLORA;   // if empty cell has one neighbor, become flora
-        }
-    } 
-    else if (grid[row][col] == SPROUT) {
-        if (sum > 1 && sum < 5) {         
-            return FLORA; 
-        }
-    }
-    else if (grid[row][col] == FLORA && ) {         // maybe if all of these conditions + an empty cell nearby becomes a sprout
-        if (sum >= 4 && sum < 7) {         // if 4 or more neighbors and less than 7
-            return TREE; // if a flora cell has 4-7 neighbors, become tree
-        }
-    } 
-    else if (grid[row][col] == FLORA) {     // possible to change other neighbor cells? 
-        if (sum >= 7) {  // if 7 or more neighbors
-            return SPROUT; // flora cell has 7 or more neighbors, become sprout
-        }
-    }
-
-    else if (grid[row][col] == BABY) { 
-        if (sum > 1 && sum < 4) {               // if it's a baby and 1<sum<4, become fauna  
-            return FAUNA; 
-        }
-    } 
-    else if (grid[row][col] == FAUNA) {
-        if (sum >= 4 && sum < 7) {         // if 4 or more neighbors and less than 7
-            return ADULT; // if a fauna cell has 4-7 neighbors, become big_fauna
-        }
-    } 
-    else if (grid[row][col] == ADULT) {     // possible to change other neighbor cells? 
-        if (sum >= 7) {  // if 7 or more neighbors
-            return BABY; // flora cell has 7 or more neighbors, become sprout
-        }
-    }
-     
+int forest_rules(int current_state, int num_states, std::vector<int> neighborhood_states) {
     
+    if (current_state == 0) {
+        
+        int soilCount=std::count(neighborhood_states.begin(), neighborhood_states.end(), Soil);
+        if (soilCount >= 2) {
+            std::cout << "Seeded!" <<std::endl;
+            return Seed; 
+        }
+    }
+    else if (current_state == Seed) {
+
+        int soilCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Soil);
+        int flowerCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Flower);
+        if (soilCount >=1 || flowerCount >=1 ) {
+            std::cout << "Seed sprouted!" << std::endl;
+            return Sprout; 
+        }
+    }
+    // else if (current_state == Sprout) {
+    //     int soilCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Soil);
+    //     if (soilCount >=2) {
+    //         return Leaves; 
+    //     }
+    // }
+    else if (current_state == Sprout) {
+        int soilCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Soil);
+        int emptyCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Empty);
+        int sproutCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Sprout);
+        int leafCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Leaves);
+        if (emptyCount >=1 || soilCount >=2 || leafCount >=1 ) {
+            std::cout << "Space for leaves to grow!" <<std::endl;
+            return Leaves; 
+        }
+    }
+    else if (current_state == Leaves) {
+        std::cout << "Flowers bloomed!" <<std::endl;
+        return Flower; 
+    }
+    else if (current_state == Flower) {
+        int soilCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Soil);
+        int emptyCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Empty);
+        int flowerCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Flower);
+        int leafCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Leaves);
+        if (emptyCount <= 1 || soilCount <= 1 || flowerCount >=4 || leafCount >= 6) { // if it's too crowded, 
+            std::cout << "Flower still in bloom" <<std::endl;
+            return Flower;
+        } 
+        else { 
+            std::cout << "Flower was too croweded. Back to soil" <<std::endl;
+            return Soil;
+        }
+        
+    }
+    else { return current_state; }
+}; 
+int main(void) {
+    int width = 15;
+    int height = 15;
+    int num_states = 6;
+    int radius = 1;
+    std::string file = "forest_input.txt";
+    std::string outfile = "forest_simulation";
+    int num_steps = 10;
+
+    CellularAutomata forest(
+        width,
+        height,
+        num_states,
+        radius,
+        BoundaryType::Fixed,        
+        NeighborhoodType::Moore,  
+        std::bind(init_forest, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, 0.5),
+        std::bind(forest_rules, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+        outfile
+    );
+    forest.setRuleFunction(std::bind(forest_rules, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+    std::cout << "States:" << std::endl; 
+    std::cout << "|| Empty || Soil || Seed || Sprout || Leaves || Flower ||" <<std::endl;
+    std::cout <<"Starting simulation"<<std::endl;
+    forest.displayGrid(); 
+    for (int i = 0; i < num_steps; i++ ) {
+        forest.step(); 
+        forest.displayGrid(); 
+    }
+    std::cout << "Simulation complete!"<< endl << "Results: " << std::endl;
+    std::map < int, std::string> state_map = {{0, "Empty"}, {1, "Soil"}, 
+                                                {2, "Seed"}, {3,"Sprout"},
+                                                {4:"Leaves"}, {5, "Flower"} };
+    int state_count; 
+    for (const auto & pair: state_map){
+        state_count = forest.countCellState(pair.first);
+        std::cout << pair.second << " count: " << state_count << std::endl;
+    }
+    
+
+    return 0;
 }
-
-int neighbor_states(const std::vector<std::vector<int>>& grid, int row, int col, int STATE, int boundary_type, int radius) {
-    int count = 0; 
-    for (int i = row - radius; i <= row + radius; i++) {
-        for (int j = col - radius; j <= col + radius; j++) {
-            if (i == row && j == col) {
-                continue; 
-            }
-            if (grid[i][j] == STATE) {
-                count++;
-            }
-        }
-    }
-    return count; 
-}
-
-int forest_rules2(const std::vector<std::vector<int>>& grid, int row, int col) {
-    int sum = moore(grid, row, col, PERIODIC);
-    if (grid[row][col] == EMPTY) {
-        if (sum == 1) {         // if one neighbor
-            return FLORA;   // if empty cell has one neighbor, become flora
-        }
-    } 
-    else if (grid[row][col] == SPROUT && neighbor_states(grid, row, col, SPROUT,)) {
-        if (sum > 1 && sum < 4) {         
-            return FLORA; 
-        }
-    }
-    else if (grid[row][col] == FLORA) {         // maybe if all of these conditions + an empty cell nearby becomes a sprout
-        if (sum >= 4 && sum < 7) {         // if 4 or more neighbors and less than 7
-            return TREE; // if a flora cell has 4-7 neighbors, become big_flora
-        }
-    } 
-    else if (grid[row][col] == FLORA) {     // possible to change other neighbor cells? 
-        if (sum >= 7) {  // if 7 or more neighbors
-            return SPROUT; // flora cell has 7 or more neighbors, become sprout
-        }
-    }
-
-    else if (grid[row][col] == BABY) { 
-        if (sum > 1 && sum < 4) {               // if it's a baby and 1<sum<4, become fauna  
-            return FAUNA; 
-        }
-    } 
-    else if (grid[row][col] == FAUNA) {
-        if (sum >= 4 && sum < 7) {         // if 4 or more neighbors and less than 7
-            return ADULT; // if a fauna cell has 4-7 neighbors, become adult
-        }
-    } 
-    else if (grid[row][col] == ADULT) {     // possible to change other neighbor cells? 
-        if (sum >= 7) {  // if 7 or more neighbors
-            return BABY; // flora cell has 7 or more neighbors, become sprout
-        }
-    }
-     
-     
-
-
-}
-

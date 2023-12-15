@@ -1,0 +1,19 @@
+# Chem 274B: Software Engineering Fundamentals for
+#            Molecular Sciences 
+# University of California, Berkeley
+# 
+# Group 13
+# Date Created: December 14, 2023
+# Last Updated: December 14, 2023 
+#
+# Directory Path: final/Lib
+ 
+Library for cellular automata and its functions 
+
+LIST OF SUBDIRECTORIES IN THIS DIRECTORY:
+(no subdirectories)
+
+LIST OF FILES IN THIS DIRECTORY:
+- README (this file)
+- libautomata.a needs to be created inside Source/
+- test_libautomata.a needs to be created inside Source/

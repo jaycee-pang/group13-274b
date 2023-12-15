@@ -16,10 +16,10 @@ CPP_LIBFLAGS=	-O3 -c
 # allows for compiler warning messages
 ERRORFLAG 	= -Wall
 
-# The directory where assn 4's main library include files are stored.
+# The directory where library include files are stored.
 INC_DIR = ../Include
 
-# The directory where assn 4's main library object files are stored
+# The directory where library object files are stored
 LIB_DIR     = ../Lib
 
 # Executable programs

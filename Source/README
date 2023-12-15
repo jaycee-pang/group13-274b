@@ -1,0 +1,29 @@
+# University of California, Berkeley
+# Chem 274B: Software Engineering Fundamentals 
+# for Molecular Sciences
+# Final project
+# 
+# Group 13
+# Date Created: December 14, 2023
+# Last Updated: December 14, 2023
+#
+# Directory Path: final/Source/
+
+This subdirectory contain C++ implementations of our 
+Cellular Automata class to hold cell states, neighborhood types, boundary types,
+and stepping through the simulation based on those rules which consider those 
+different parameters. 
+
+
+
+LIST OF FILES IN THIS DIRECTORY:
+- README: (is this file)
+- Makefile: creates a library from the source files 
+- source_automata_class.cpp: C++ implementation of the cellular automata class adn its functions to run the simulation 
+- rules.cpp: C++ implementations of the 3 required rule functions: majority, straight, and neihgbor conditional 
+
+
+
+
+
+
