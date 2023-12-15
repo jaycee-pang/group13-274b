@@ -27,10 +27,10 @@ LIST OF SUBDIRECTORIES IN THIS DIRECTORY:
 - Source/ : This directory contains all the source code with the
         functionality implemented in C++. This includes the Cellular Automata class and its initialization steps, update steps, and outputs as well as its rule functions. 
 		
-- Tests: Test programs used to test the functionalities of our cellular automata by running simulations of various parameters. 
+- Tests/: Test programs used to test the functionalities of our cellular automata by running simulations of various parameters. 
 		
 - Utils: Contains all the source files that implement utilities
-        like timing, I/O, and random array generation, other performance metric tools. 
+        for grid visualization. 
 
 LIST OF FILES IN THIS DIRECTORY:
 - README:(is this file) 
@@ -41,4 +41,4 @@ LIST OF FILES IN THIS DIRECTORY:
 - .gitignore: For GitHub repository commits, currently preventing
         pushing object files (e.g., static libraries, linkable 
         object files, and some executables under Bin/)
-- Answers-Assignment3: answers, algorithmic analysis, plots 
+- reflections: individual reflections on this project
