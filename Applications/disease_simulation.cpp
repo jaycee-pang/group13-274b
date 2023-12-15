@@ -14,7 +14,6 @@
 #include <string>
 #include <vector>
 #include <random>   //allow for random number generation
-#include <algorithm>
 
 #include "source_automata_compiled.h"   //API with class declarations
 
