@@ -126,10 +126,10 @@ int main(void) {
     } while (true);
     // "Enter the rule function to use: (0 for default, 1 for majority, 2 for straight, 3 for conditional neighbor): 
     std::cout << "Starting simulation" << std::endl;
-     
+    CA.displayGrid();
     do {
         std::cout <<"Enter the number of steps for the simulation:"
-    CA.displayGrid();
+    
     for (int i = 0; i< num_steps; i++) {
         std::cout << "0: Majority \n1: Straight \n2: Conditional neigbor " <<std::endl;
         std::cout << "Enter rule to apply for step " << i + 1 <<": ";
@@ -138,16 +138,16 @@ int main(void) {
         switch (userRule)
         {
         case 0:
-            CA.setRuleFunction(std::bind(majority_rule, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+            CA.setRuleFunction(MajorityRule);
             break;
         case 2:
-            CA.setRuleFunction(std::bind(straight_rule, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+            CA.setRuleFunction(StraightRule);
             break;
         case 3:
-            CA.setRuleFunction(std::bind(conditional_neighbor_rule, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+            CA.setRuleFunction(NeighborRule);
             break;
         default:
-            // CA.setRuleFunction(std::bind(defaultRuleFunc, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+            CA.setRuleFunction(defaultRuleFunc);
             break;
         }
         CA.step(); 
