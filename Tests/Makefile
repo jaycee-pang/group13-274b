@@ -25,13 +25,45 @@ LIB_DIR     = ../Lib
 # Executable programs
 BIN_DIR     = ../Bin
 
-
+# Generate executables to test functionalities 
 EXECUTABLES = test_source_automata_compiled_class test_majority test_straight test_neighbor
 
 test_source_automata_compiled_class: $(INC_DIR)/source_automata_compiled.h
 	$(CPP) $(CPPFLAGS) test_source_automata_compiled_class test_source_automata_compiled_class.cpp \
 	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
 	mv test_source_automata_compiled_class $(BIN_DIR)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 test_majority: $(INC_DIR)/source_automata_compiled.h
 	$(CPP) $(CPPFLAGS) test_majority test_majority.cpp \
