@@ -33,6 +33,12 @@ BIN_DIR     = ../Bin
 EXECUTABLES	= disease_automata forest
 TXT_FILES	= disease_simulation.txt forest_simulation
 
+general_sim:$(LIB_DIR)/test_libautomata.a
+	$(CPP) $(CPPFLAGS) general_sim general_sim.cpp \
+	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
+	mv general_sim $(BIN_DIR)
+	cd $(BIN_DIR); ./general_sim
+
 disease_automata:$(LIB_DIR)/test_libautomata.a
 	$(CPP) $(CPPFLAGS) disease_automata disease_simulation.cpp \
 	-I$(INC_DIR) $(LIB_DIR)/test_libautomata.a
