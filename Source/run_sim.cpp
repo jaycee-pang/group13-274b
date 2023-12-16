@@ -7,20 +7,6 @@
 // Date Created: December 10, 2023
 // Date Updated: December 14, 2023 
 // 
-// Run a simulation for the cellular automata. 
-//     
-// The API (include) file is source_automata_compiled.h, which includes prototypes
-// of the functions defined in this file.
-
-// Chem 274B: Software Engineering Fundataions for
-//            Molecular Sciences 
-// Group 13 
-// 
-// Directory Path: final/Source/ 
-//
-// Date Created: December 10, 2023
-// Date Updated: December 14, 2023 
-// 
 // function to run the simulation with CA input parameters. 
 #include <iostream>
 #include <vector>
@@ -53,6 +39,12 @@ int input_simulation(int width, int height, int num_states, int radius, Boundary
     }
     std::cout <<"Simulation complete." <<std::endl;
     // successful run 
+
+    std::cout << "Results:"<<std::endl;
+    for (int i = 0; i < num_states; i ++) {
+        int count = CA.countCellState(i); 
+        std::cout << "State [" << i << "]: "<<count<<std::endl;
+    }
     return 0; 
   
 
