@@ -22,6 +22,10 @@ LIST OF FILES IN THIS DIRECTORY:
 - source_automata_class.cpp: C++ implementation of the cellular automata class adn its functions to run the simulation 
 - rules.cpp: C++ implementations of the 3 required rule functions: majority, straight, and neihgbor conditional 
 
+### Sources to Disease Simulation Data
+[mortality rate data](https://wonder.cdc.gov/controller/datarequest/D158;jsessionid=EDF51154784AE93C2EB5E7BA5C8F)
+[infectivity rate data](https://www.cdc.gov/mmwr/volumes/72/wr/mm7208a1.htm#:~:text=Among%2015%2C678%20unvaccinated%20person%2Ddays,A%20virus%20infection%20was%2071%25.)
+[rate of flu vaccination USA](https://grady.uga.edu/news/more-adults-likely-to-get-a-flu-vaccination-than-receive-an-updated-covid-19-vaccine/#:~:text=According%20to%20the%20Centers%20for,2022%2D23%20was%2049%25.)
 
 
 

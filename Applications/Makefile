@@ -46,7 +46,6 @@ disease_automata:$(LIB_DIR)/test_libautomata.a
 	cd $(BIN_DIR); ./disease_automata
 
 visual_disease_automata:
-	make cleanall
 	make disease_automata
 	cd $(UTILS_VISUAL); python visualize_automata.py ../../Bin/disease_simulation.txt -o ../../Bin
 	
@@ -57,7 +56,6 @@ forest: $(LIB_DIR)/test_libautomata.a
 	cd $(BIN_DIR); ./forest
 
 visual_forest:
-	make cleanall
 	make forest
 	cd $(UTILS_VISUAL); python visualize_automata.py ../../Bin/forest_simulation -o ../../Bin
 
