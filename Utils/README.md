@@ -5,14 +5,10 @@ Directory: `Utils/`
 
 
 ## USAGE
-Directory contains subdirectories containing output data, output data visualizers, and possibly other utility functions (and their respective Include/Source subdirectories)??
+Directory contains the tools to visualize the results of the cellular automata simulation. Run the following command after you have completed a simulation to see a gif of the grid through the simulation: 
 
-## UPDATES
+    python visualize_automata.py input_dir -o output_dir --automata_name your_automata
+    -h for instructions 
 
-11.27.2023
-- Shirley: created directory, added README
+The jupyter notebook contains an example of viewing a grid at a certain time step. This is useful for analysis. 
 
-
-## QUESTIONS
-- What other utils do we need?
-    - any source/include/util function stuff? 
