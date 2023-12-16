@@ -21,6 +21,7 @@ LIST OF FILES IN THIS DIRECTORY:
 - Makefile: creates a library from the source files 
 - source_automata_class.cpp: C++ implementation of the cellular automata class adn its functions to run the simulation 
 - rules.cpp: C++ implementations of the 3 required rule functions: majority, straight, and neihgbor conditional 
+- run_sim.cpp: functionality for running a simulation given CA parameters
 
 
 
