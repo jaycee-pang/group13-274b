@@ -26,7 +26,7 @@ Running a simulation after the cellular automata has been set up requires callin
 
 Alternatively, the `input_simulation` function to input all of the parameters for the cellular automata, and run a simulation for the specified number of time steps. 
 
-
+Visualization is done by running the python script found in Utils/ with the output text file for the simulation. It produces a gif showing the grid for all of the steps of the simulation. 
 
 Two applications of our cellular automata are found in Applications/. One models disease spreading with set infection rate and other parameters pertaining to a disease simulation such as vaccination rate. The other application models the evolution of a plant based on a set fertility rate and rule function determining growth conditions. 
 

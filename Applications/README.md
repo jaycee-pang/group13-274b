@@ -4,10 +4,9 @@
 # Group 13
 # Date Created: December 2023
 #
-# Directory Path: Final/Tests/
+# Directory Path: final/2023
 
-This directory contains source C++ programs with tests for 
-the cellular automata's functionalities
+This directory contains example applications of the cellular automata general library. 
 
 LIST OF SUBDIRECTORIES IN THIS DIRECTORY:
 (no subdirectories)
