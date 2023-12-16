@@ -7,7 +7,7 @@ Create automata static library
 <pre> make test_libautomata.a </pre>
 
 ## Applications
-`disease_simulation.cpp` - simulates influenza virus spread in a 10x10 area
+`disease_simulation.cpp` - simulates influenza virus spread in an area
 [mortality rate data](https://wonder.cdc.gov/controller/datarequest/D158;jsessionid=EDF51154784AE93C2EB5E7BA5C8F)
 [infectivity rate data](https://www.cdc.gov/mmwr/volumes/72/wr/mm7208a1.htm#:~:text=Among%2015%2C678%20unvaccinated%20person%2Ddays,A%20virus%20infection%20was%2071%25.)
 [rate of flu vaccination USA](https://grady.uga.edu/news/more-adults-likely-to-get-a-flu-vaccination-than-receive-an-updated-covid-19-vaccine/#:~:text=According%20to%20the%20Centers%20for,2022%2D23%20was%2049%25.)

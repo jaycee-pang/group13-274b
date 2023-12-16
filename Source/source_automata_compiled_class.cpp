@@ -163,7 +163,6 @@ void CellularAutomata::initializeGrid()
     }
 }
 
-// TO DO: IS BUGGY, NEEDS TO BE FIXED
 // load cell values from input text stream (from alternate constructor)
 void CellularAutomata::loadGrid(std::ifstream &in_stream, int target_time)
 {
@@ -171,17 +170,30 @@ void CellularAutomata::loadGrid(std::ifstream &in_stream, int target_time)
     std::string header;
     bool reach_time = false;
 
-    std::cout << header << std::endl;
-    int step, x, y, value;
+    //skip header row
+    std::getline(in_stream, header);
     
-    while (in_stream >> step >> x >> y >> value)
+    std::string pre_step, pre_x, pre_y, pre_value;  //values inputted as strings
+    int step, x, y, value;
+
+    int count = 0;
+    while(std::getline(in_stream, header, '\n'))
     {
-        if (step == target_time)
+        in_stream >> pre_step >> pre_x >> pre_y >> pre_value;
+        
+        step = std::stoi(pre_step); //convert step, x, y, value to int
+        x = std::stoi(pre_x);
+        y = std::stoi(pre_y);
+        value = std::stoi(pre_value);
+
+        if (step == target_time)    //if time step is found at user-defined time
         {
             reach_time = true;
             grid[x][y] = value;
         }
+        std::getline(in_stream, header);    //next line
     }
+
     in_stream.close();
     if (!reach_time) // if never reached desired target time
     {
@@ -278,9 +290,8 @@ void CellularAutomata::save_grid()
             for (int j = 0; j < gridWidth; ++j)
             {
                 out << num_steps << ", " << j << ", ";
-                out << i << ", " << grid[i][j];
+                out << i << ", " << grid[i][j] << std::endl;
             }
-            out << std::endl;
         }
         out.close();
     }

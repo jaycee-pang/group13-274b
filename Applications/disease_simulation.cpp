@@ -22,7 +22,6 @@ int DiseaseCustomInit(int, int, int);   //custom init declaration
 
 int main(void)
 {
-    std::string file = "user_input.txt";    //N/A at the moment
     std::string output = "disease_simulation.txt";
     int num_steps = 7; //number of steps
 
@@ -45,7 +44,7 @@ int main(void)
     {
         std::cout << "step " << i << std::endl;
         disease_simulation.step();
-        disease_simulation.displayGrid();
+        //disease_simulation.displayGrid();
     }
 
     return 0;
