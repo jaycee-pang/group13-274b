@@ -13,6 +13,23 @@ This is the main directory for Group 13's final project.
 This is our implementation of a general purpose library of a cellular automata
 that can be used in a variety of applications to model different phenomena. 
 
+Users can select the parameters to use for their cellular automata specifying: 
+    - initialization of the gird 
+    - rule functions 
+    - number of states 
+    - width and height of the grid 
+    - specify rule function at a certain time step 
+Cellular Automata can be constructed by specifying the parameters directly as arguments, or can be loaded in from a txt file. 
+Users can choose from the default rule function, the provided rule functions (majority, straight, or neighbor), or set their own. They can also set a custom initialization function or use the default. 
+
+Running a simulation after the cellular automata has been set up requires calling the `step` function. If you would like a different rule for a different step, call `setRuleFunction`.
+
+Alternatively, the `input_simulation` function to input all of the parameters for the cellular automata, and run a simulation for the specified number of time steps. 
+
+
+
+Two applications of our cellular automata are found in Applications/. One models disease spreading with set infection rate and other parameters pertaining to a disease simulation such as vaccination rate. The other application models the evolution of a plant based on a set fertility rate and rule function determining growth conditions. 
+
 The directory structure is as follows:
 
 LIST OF SUBDIRECTORIES IN THIS DIRECTORY:
@@ -37,8 +54,4 @@ LIST OF FILES IN THIS DIRECTORY:
 
 - Makefile: Makefile with global make command. See the Makefile
         for possible 'make commands' from this directory level.
-
-- .gitignore: For GitHub repository commits, currently preventing
-        pushing object files (e.g., static libraries, linkable 
-        object files, and some executables under Bin/)
 - reflections: individual reflections on this project
