@@ -116,6 +116,8 @@ int main(void) {
         radius,
         btype,
         ntype,
+        defaultInitFunc,
+        defaultRuleFunc,
         outfile);
     int num_steps; 
     do {

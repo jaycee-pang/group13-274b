@@ -32,7 +32,7 @@ int init_forest (int x, int y, int max_states)
 {   
     // put seeds 
     double fertilityProb = 0.65; 
-    double prob = static_cast<double>(rand()) / RAND_MAX; 
+    double prob = static_cast<double>(rand()) / RAND_MAX;
     if (prob < fertilityProb/2) {
         return Seed;
     }

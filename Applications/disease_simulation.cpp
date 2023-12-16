@@ -60,7 +60,7 @@ int DiseaseCustomInit(int x, int y, int num_states)
 
     double initial_infection = 0.4; //chance cell is infected
     double density = .5;    //chance cell is a person
-    double vaccination_rate = 0.49;    //for adults 18+
+    double vaccination_rate = 1; //0.49;    //for adults 18+
 
     std::random_device rd;
     std::mt19937 gen(rd()); // generate random value
