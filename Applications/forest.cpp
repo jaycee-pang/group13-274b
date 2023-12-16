@@ -24,19 +24,7 @@ const int Sprout = 3;
 const int Leaves = 4; 
 const int Flower = 5; 
 
-// auto init_forest_with_prob(double fertilityProb) {
-//     return [=](int x, int y, int max_states) -> int {
-//         // put seeds
-//         double prob = static_cast<double>(rand()) / RAND_MAX;
-//         if (prob < fertilityProb / 2) {
-//             return Seed;
-//         } else if (prob < fertilityProb) {
-//             return Soil;
-//         } else {
-//             return Empty;
-//         }
-//     };
-// }
+
 int init_forest(int , int , int ); 
 int forest_rules(int , int , std::vector<int> );
 
@@ -57,6 +45,12 @@ int forest_rules(int current_state, int num_states, std::vector<int> neighborhoo
     
     if (current_state == Empty) {
         
+        int EmptyCount=std::count(neighborhood_states.begin(), neighborhood_states.end(), Empty);
+        if (EmptyCount >= 1) {
+            return Soil; 
+        }
+    }
+    else if (current_state == Soil) {
         int soilCount=std::count(neighborhood_states.begin(), neighborhood_states.end(), Soil);
         if (soilCount >= 2) {
             // std::cout << "Seeded!" <<std::endl;
@@ -67,8 +61,8 @@ int forest_rules(int current_state, int num_states, std::vector<int> neighborhoo
 
         int soilCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Soil);
         int flowerCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Flower);
-        if (soilCount >=1 || flowerCount >=1 ) {
-            std::cout << "Seed sprouted!" << std::endl;
+        if (soilCount >=2 || flowerCount >=1 ) {
+            // std::cout << "Seed sprouted!" << std::endl;
             return Sprout; 
         }
     }
@@ -83,21 +77,26 @@ int forest_rules(int current_state, int num_states, std::vector<int> neighborhoo
         int emptyCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Empty);
         int sproutCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Sprout);
         int leafCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Leaves);
-        if (emptyCount >=1 || soilCount >=2 || leafCount >=1 ) {
+        if (emptyCount >=1 || soilCount >=2 || leafCount <=6 ) {
             // std::cout << "Space for leaves to grow!" <<std::endl;
             return Leaves; 
         }
     }
     else if (current_state == Leaves) { // leaves alwys bloom 
         // std::cout << "Flowers bloomed!" <<std::endl;
-        return Flower; 
+        int flowerCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Flower);
+
+        if (flowerCount <=5) {
+            return Flower; 
+        }
+         
     }
     else if (current_state == Flower) { // flowers can't be too crowded
         int soilCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Soil);
         int emptyCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Empty);
         int flowerCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Flower);
         int leafCount = std::count(neighborhood_states.begin(), neighborhood_states.end(), Leaves);
-        if (emptyCount >= 1 || soilCount >= 1 || flowerCount <=6 || leafCount <= 6) { // if it's too crowded, 
+        if (emptyCount >= 1 || soilCount >= 1 || flowerCount <=6 && leafCount <= 6) { // if it's too crowded, 
             // std::cout << "Flower still in bloom" <<std::endl;
             return Flower;
         } 
