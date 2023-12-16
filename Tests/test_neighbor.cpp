@@ -40,8 +40,8 @@ int main(void)
 
     // Test02: Periodic, Moore 
     std::string file02 = "neighbor_periodic_moore.txt";
-    BoundaryType btype = BoundaryType::Periodic; 
-    NeighborhoodType ntype = NeighborhoodType::Moore; 
+    btype = BoundaryType::Periodic; 
+    ntype = NeighborhoodType::Moore; 
     int test = input_simulation(width, height, num_states, radius, btype, 
                         ntype, defaultInitFunc, 
                         StraightRule, 
@@ -49,8 +49,8 @@ int main(void)
                         sim_steps) ;
 
     // Test03: Cutoff, VN
-    BoundaryType btype = BoundaryType::Cutoff; 
-    NeighborhoodType ntype = NeighborhoodType::VonNeumann; 
+    btype = BoundaryType::Cutoff; 
+    ntype = NeighborhoodType::VonNeumann; 
     std::string file03 = "neighbor_cutoff_vn.txt";
     int test03 = input_simulation(width, height, num_states, radius, btype, 
                         ntype, defaultInitFunc, 
@@ -58,8 +58,8 @@ int main(void)
                         file03,
                         sim_steps) ;
     // Test04: Cutoff, Moore
-    BoundaryType btype = BoundaryType::Cutoff; 
-    NeighborhoodType ntype = NeighborhoodType::Moore; 
+    btype = BoundaryType::Cutoff; 
+    ntype = NeighborhoodType::Moore; 
     std::string file04 = "neighbor_cutoff_moore.txt";
     int test04 = input_simulation(width, height, num_states, radius, btype, 
                         ntype, defaultInitFunc, 
@@ -68,8 +68,8 @@ int main(void)
                         sim_steps) ;
     
     // Test05: Fixed, VN
-    BoundaryType btype = BoundaryType::Fixed; 
-    NeighborhoodType ntype = NeighborhoodType::VonNeumann; 
+    btype = BoundaryType::Fixed; 
+    ntype = NeighborhoodType::VonNeumann; 
     std::string file05 = "neighbor_fixed_vn.txt";
     int test05 = input_simulation(width, height, num_states, radius, btype, 
                         ntype, defaultInitFunc, 
@@ -78,9 +78,9 @@ int main(void)
                         sim_steps) ;
     
     // Test06: Fixed, Moore
-    BoundaryType btype = BoundaryType::Fixed; 
-    NeighborhoodType ntype = NeighborhoodType::Moore; 
-    std::string file06 = "neighbor_fixed_vn.txt";
+    btype = BoundaryType::Fixed; 
+    ntype = NeighborhoodType::Moore; 
+    std::string file06 = "neighbor_fixed_moore.txt";
     int test06 = input_simulation(width, height, num_states, radius, btype, 
                         ntype, defaultInitFunc, 
                         NeighborRule, 
