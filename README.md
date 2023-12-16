@@ -54,4 +54,5 @@ LIST OF FILES IN THIS DIRECTORY:
 
 - Makefile: Makefile with global make command. See the Makefile
         for possible 'make commands' from this directory level.
+- enviornment.yaml for setting up the environment to use the visualization utilities 
 - reflections: individual reflections on this project
